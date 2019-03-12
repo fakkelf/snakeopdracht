@@ -1,0 +1,155 @@
+/*** Generiek ***/
+html {
+	height: 85%;
+}
+body {
+	height: 100%;
+	margin: 0.1em;
+}
+
+header {
+	margin-bottom: 2em;
+}
+
+h1 {
+	font-size: 2.5em;
+}
+
+h2 {
+	font-size: 1.5em;
+}
+
+h3 {
+	font-size: 1em;
+}
+
+/*** Pagina ***/
+.page {
+	width: 100%;
+	min-width: 38em;
+	max-width: 58em;
+	height: 100%;
+	max-height: 30em;	
+	margin: 1em auto;
+	margin-bottom: 5em;
+	padding: 0 1em;
+}
+.pageheader{
+	border-style: solid;
+	border-right-style: none;
+	border-bottom-style: none;	
+	border-bottom-right-radius: 90%;
+	background: #ff09;
+	height: 3em;
+}
+
+.pagetitle {
+	text-align: center;
+	font-size: 2em;
+	margin: 0.1em auto;
+}
+
+footer{
+	clear: right;
+}
+
+/*** Navigatie ***/
+nav {
+	border-style: solid;
+	border-right-style: none;
+	border-bottom-style: none;	
+	border-bottom-right-radius: 5em;
+	background: #ff09;
+	text-align: left;
+	min-width: 12em;
+	max-width: 20%;
+	min-height: 95%;
+}
+
+a{
+	display: block;
+	height: 1.5em;
+	background-color: #d22525;	
+	margin: 0.2em;
+	margin-right: 0.5em;	
+	padding-left: 0.5em;
+	padding-right: 0.2em;
+	color: black;
+	text-decoration: none;
+	border-bottom-right-radius: 0.2em;
+	
+}
+
+a:hover{	
+	margin-right: 0.2em;
+}
+
+.selected {
+	background-color: #fc281a;
+}
+
+.selected:hover{
+	margin-right: 0.5em;
+}
+
+.navtitle {
+	text-align: center;
+}
+
+/*** Artikel ***/
+article {
+	min-width: 20em;
+	width: 60em;
+	float: right; 
+	max-width: 70%;
+	padding-left: 1em;
+	
+}
+
+.artikeltitle {
+	text-align: left;
+	padding-left: 5em;
+}
+
+.column1 {	
+	width: 60%;
+}
+.column2 {
+	width: 39%;
+	float: right;
+}
+
+.buttonnav {
+	margin: 0.05em;
+	height: 1.5em;
+}
+
+/** Artikel specifiek **/
+#mySnakeCanvas {
+	border-style: solid;
+	border-width: 0.1em;
+}
+
+#startSnake{
+	margin-left: 25%;
+	width: 5em;
+	border-radius: 0.5em;
+	background: #ff09;
+}
+
+#startSnake:hover{
+  background-color: #d22525; 
+  color: white;	
+}
+
+#stopSnake{
+	margin-left: 5%;
+	width: 5em;
+	border-radius: 0.5em;
+	background: #ff09;
+}
+
+#stopSnake:hover{
+  background-color: #d22525; 
+  color: white;	
+}
