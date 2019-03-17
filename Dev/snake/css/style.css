@@ -1,0 +1,29 @@
+/** Snake Artikel specifiek **/
+#mySnakeCanvas {
+	border-style: solid;
+	border-width: 0.1em;
+}
+
+#startSnake{
+	margin-left: 25%;
+	width: 5em;
+	border-radius: 0.5em;
+	background: #ff09;
+}
+
+#startSnake:hover{
+  background-color: #d22525; 
+  color: white;	
+}
+
+#stopSnake{
+	margin-left: 5%;
+	width: 5em;
+	border-radius: 0.5em;
+	background: #ff09;
+}
+
+#stopSnake:hover{
+  background-color: #d22525; 
+  color: white;	
+}
