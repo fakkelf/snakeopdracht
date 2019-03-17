@@ -86,48 +86,7 @@ function Snake(segments) {
 	this.segments = segments;
 	}
     
-/**
-   @constructor Element
-   @param radius straal
-   @param {number} x x-coordinaat middelpunt
-   @param {number} y y-coordinaat middelpunt
-   @param {string} color kleur van het element
-*/ 
-function Element(radius, x, y, color) {
-  this.radius = radius;
-  this.x = x;
-  this.y = y;
-  this.color = color;
-  
-/**
-   @function collidesWithOneOf() -> 
-   @returns boolean 
-*/
-   this.collidesWithOneOf = function (elems) {
-	found = false;
-    var xx = this.x;
-	var yy = this.y;
-	//console.log (elems[0].x);
-		
-	  for (i = 0; i < elems.length; i++){
-		if (elems[i].x === xx && elems[i].y === yy) {
-	    
-		console.log ("true");
-		console.log (this.x);
-		console.log (elems[i].x);
-		console.log (this.y);
-		console.log (elems[i].y);
-		return true;
-	    }
-	
-	
-	
-    return false;
-   }
- 
-}
-  
-}
+
 /***************************************************************************
  **                 Hulpfuncties                                          **
  ***************************************************************************/
@@ -148,15 +107,15 @@ function createStartSnake() {
 function createStartSnake_Alt() {
     
     // Defineer head
-    var headsegment = createSegment(R + FIELD.WIDTH/2, R + FIELD.WIDTH/2);    
+    var headsegment = createSegment(R + FIELD.WIDTH/2, FIELD.WIDTH/2 - R);    
     headsegment.color = SNAKE.COLORS.HEAD;
     
     // Defineer tail
-    var tailsegment = createSegment(R + FIELD.WIDTH/2, FIELD.WIDTH/2 - R);
+    var tailsegment = createSegment(R + FIELD.WIDTH/2, R + FIELD.WIDTH/2);
     
     var segments = [];
-    segments.push(headsegment);
     segments.push(tailsegment);
+    segments.push(headsegment);             // Kop van de slang is het laatste element.
     
     snake = new Snake(segments);
 }
