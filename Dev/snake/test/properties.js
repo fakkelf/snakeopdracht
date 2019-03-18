@@ -1,24 +1,8 @@
-
- /***************************************************************************
- **                 Basale waarden                                         **
- ***************************************************************************/
-/** 
-    @constant
-    @type {number}
-    @desc Straal van een element
-*/
-const R             = 10;                              // straal van een element
-/** 
-    @constant
-    @type {number}
-    @desc Kant grootte van het veld
-*/
-const SIDELENGTH    = 360;                             // Kant grootte van het veld
+// ** Definieer basale waarden
+const R        = 10,                                // straal van een element
+      SIDELENGTH = 360;                             // Kant grootte van het veld
 
 // ** Definieer Object templates
- /***************************************************************************
- **                 Object templates                                       **
- ***************************************************************************/
 const MOVE_TEMPLATE = {
     STEP: 2 * R,                                    // stapgrootte
     LEFT: "left",                                   // beweeg naar links
@@ -51,36 +35,9 @@ const FIELD_TEMPLATE = {
 };
 
 // ** Defineer immutabele objecten.
-
- 
- /** 
-    @constant
-    @desc Mogelijkheden om te kunnen bewegen over het veld.
-    @type MOVE
-    @property {number} STEP - Stap grootte (2 * R).
-    @property {string} Left - Beweeg een stap naar links.
-    @property {string} RIGT - Beweeg een stap naar rechts.
-    @property {string} UP   - Beweeg een stap naar boven.
-    @property {string} DOWN - Beweeg een stap naar onder.
-*/
 const MOVE = Object.freeze(MOVE_TEMPLATE);
- /** 
-    @constant
-    @type SNAKE
-
-*/
 const SNAKE = Object.freeze(SNAKE_TEMPLATE);
- /** 
-    @constant
-    @type FOOD
-*/
 const FOOD = Object.freeze(FOOD_TEMPLATE);
- /** 
-    @constant
-    @type FIELD
-    @property {string} COLOR    - Kleur van een voedsel element.
-    @property {number} NUMBER   - Aantal voedsel elementen op het veld.
-*/
 const FIELD = Object.freeze(FIELD_TEMPLATE);
 
 
