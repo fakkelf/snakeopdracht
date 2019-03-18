@@ -1,4 +1,8 @@
 
+ /***************************************************************************
+ **                 Variabelen                                             **
+ ***************************************************************************/
+ 
 	
 var snake,
     foods = [];                                // voedsel voor de slang
@@ -31,19 +35,14 @@ $(document).ready(function() {
   @function init() -> void
   @desc Haal eventueel bestaand voedsel en een bestaande slang weg, cre\"eer een slang, genereer voedsel, en teken alles
 */
-function init() {		
-    //if (snake !== undefined || snake.length != 0) {
-		snake = []
-	//}	
-    //if (foods !== undefined || foods.length != 0) {
-	    foods = []
-	//}
+function init() {	
+	snake = []
+	foods = []
+	
     // createStartSnake()
     createStartSnake_Alt()
 	createFoods()
-	draw()
-	console.log("testing init")
-	/* in te vullen */
+	draw()  
 }
 
 /**
@@ -55,6 +54,7 @@ function stop() {
 	foods = []
 	$("#mySnakeCanvas").clearCanvas();
 }
+
 
 /**
   @function move(direction) -> void
@@ -76,16 +76,7 @@ function move(direction) {
 /***************************************************************************
  **                 Constructors                                          **
  ***************************************************************************/
-/**
-   @constructor Snake
-   @param {[Element] segments een array met aaneengesloten slangsegmenten
-                   Het laatste element van segments wordt de kop van de slang 
-*/ 
-function Snake(segments) {
-	this.segments = [];
-	this.segments = segments;
-	}
-    
+   
 
 /***************************************************************************
  **                 Hulpfuncties                                          **
@@ -119,17 +110,5 @@ function createStartSnake_Alt() {
     
     snake = new Snake(segments);
 }
-
-/**
-  @function getRandomInt(min: number, max: number) -> number
-  @desc Creeren van random geheel getal in het interval [min, max] 
-  @param {number} min een geheel getal als onderste grenswaarde
-  @param {number} max een geheel getal als bovenste grenswaarde (max > min)
-  @return {number} een random geheel getal x waarvoor geldt: min <= x <= max
-*/
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 
 
