@@ -33,14 +33,14 @@ $(document).ready(function() {
  ***************************************************************************/
 /**
   @function init() -> void
-  @desc Haal eventueel bestaand voedsel en een bestaande slang weg, cre\"eer een slang, genereer voedsel, en teken alles
+  @desc Haal eventueel bestaand voedsel en een bestaande slang weg, creeer een slang, genereer voedsel, en teken alles
 */
 function init() {	
 	snake = []
 	foods = []
 	
-    // createStartSnake()
-    createStartSnake_Alt()
+// createStartSnake()
+  createStartSnake()
 	createFoods()
 	draw()  
 }
@@ -89,13 +89,6 @@ function move(direction) {
   @return: slang volgens specificaties
 */
 function createStartSnake() {
-    var segments   = [createSegment(R + FIELD.WIDTH/2, R + FIELD.WIDTH/2), 
-	                  createSegment(R + FIELD.WIDTH/2, FIELD.WIDTH/2 - R)];
-    snake = new Snake(segments);
-
-}
-
-function createStartSnake_Alt() {
     
     // Defineer head
     var headsegment = createSegment(R + FIELD.WIDTH/2, FIELD.WIDTH/2 - R);    

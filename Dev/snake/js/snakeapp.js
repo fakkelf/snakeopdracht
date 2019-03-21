@@ -39,9 +39,8 @@ function init() {
 	snake = []
 	foods = []
 	
-    // createStartSnake()
-    createStartSnake_Alt()
-	createFoods()
+  createStartSnake()
+  createFoods()
 	draw()  
 }
 
@@ -89,13 +88,6 @@ function move(direction) {
   @return: slang volgens specificaties
 */
 function createStartSnake() {
-    var segments   = [createSegment(R + FIELD.WIDTH/2, R + FIELD.WIDTH/2), 
-	                  createSegment(R + FIELD.WIDTH/2, FIELD.WIDTH/2 - R)];
-    snake = new Snake(segments);
-
-}
-
-function createStartSnake_Alt() {
     
     // Defineer head
     var headsegment = createSegment(R + FIELD.WIDTH/2, FIELD.WIDTH/2 - R);    

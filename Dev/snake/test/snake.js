@@ -6,6 +6,15 @@
  /***************************************************************************
  **                 Hulpfuncties                                           **
  ***************************************************************************/
+
+
+/**
+*  @function newX
+*  @desc berekent de nieuwe waarde x na een horizontale beweging 
+*  @param {Number} x - waarde
+*  @param {Move} direction - waarde
+* @returns {Number} x - waarde
+*/
 function newX(x, direction) {
     if (direction === MOVE.LEFT) {
         return x - MOVE.STEP;
@@ -14,7 +23,13 @@ function newX(x, direction) {
     }
     return x;
 }
-
+/**
+* @function newY
+* @desc berekent de nieuwe waarde x na een horizontale beweging 
+* @param {Number} y - waarde
+* @param {Move} direction - waarde
+* @returns {Number} y - waarde
+*/
 function newY(y, direction) {
     if (direction === MOVE.DOWN) {
         return y + MOVE.STEP;
@@ -23,12 +38,25 @@ function newY(y, direction) {
     }
     return y;
 }
-
+/**
+ * @function moveSegment
+ * @desc geeft een nieuwe positie (x,y) aan een segment na een beweging.
+ * @param {Element} segment 
+ * @param {Move} direction 
+ */
 function moveSegment(segment , direction) {
     segment.x = newX(segment.x, direction);
     segment.y = newY(segment.y, direction);
 }
 
+/**
+ * @function isValidMove
+ * @descr bekijk of de Move geldig is.
+ * @param {Number} x 
+ * @param {Number} y 
+ * @returns {Boolean} false wanneer de Move buiten het canvas valt, 
+ *                    true wanneer de Move binnen het canvas is.
+ */
 function isValidMove(x, y) {
     if (x >= FIELD.XMIN && x <= FIELD.XMAX && y >= FIELD.YMIN && y <= FIELD.YMAX) {
         return true;
@@ -37,6 +65,13 @@ function isValidMove(x, y) {
     }
 }
 
+/**
+ * @function newHead
+ * @descr maak een nieuwe kop van de snake, en geef deze een nieuwe positie (x,y)
+ * @param {Element} head 
+ * @param {Move} direction 
+ * @returns {Element} headnew 
+ */
 function newHead(head, direction) {
     headnew = createSegment(head.x, head.y);
     
@@ -51,12 +86,20 @@ function newHead(head, direction) {
  **                 Prototype                                              **
  ***************************************************************************/
 
+/**
+ * @function getHead
+ * @descr het ophalen van de kop van de snake
+ * @returns {Element} het element van het hoofd van de snake
+ */
 Snake.prototype.getHead = function() {
     return this.segments[this.segments.length - 1];
 }
 
 /**
-Prototype Snake function
+ * @function Snake.protopy.canMove
+ * @descr controleert of de MOVE valide is.
+ * @returns {Boolean} true als de beweging binnen de afmeting van het canvas blijft.
+ *                    false als deze buiten de canvas beweegt. 
 */
 Snake.prototype.canMove = function(direction) {
     head = this.getHead();
@@ -64,6 +107,12 @@ Snake.prototype.canMove = function(direction) {
     return isValidMove(newX(head.x, direction), newY(head.y, direction));
 }
 
+/**
+ * @funtcion Snake.prototype.doMove
+ * @descr creeert een nieuwe kop van de slang en beweegt deze, waarna
+ *        er gecontrolleerd wordt of deze in aanraking komt met voedsel
+ * @param {Move} direction - waarde
+ */
 Snake.prototype.doMove = function(direction) {
     
     nexthead = newHead(this.getHead(), direction);
@@ -106,7 +155,7 @@ function move(direction) {
  ***************************************************************************/
 /**
    @constructor Snake
-   @param {[Element] segments een array met aaneengesloten slangsegmenten
+   @param {[Element]} segments een array met aaneengesloten slangsegmenten
                    Het laatste element van segments wordt de kop van de slang 
 */ 
 function Snake(segments) {
