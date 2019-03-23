@@ -22,12 +22,13 @@
   @desc Teken de slang en het voedsel
 */
 function draw() {
-	var canvas = $("#mySnakeCanvas").clearCanvas();
+    resetCanvas();
+    var canvas = $("#mySnakeCanvas");
+    
 	for (i = 0; i < snake.segments.length; i++) {
 	   drawElement (snake.segments[i], canvas);
     };
     for (i = 0; i < foods.length; i++) {
-	   drawElement (foods[i], canvas);
-		
+	   drawElement (foods[i], canvas);		
 	}
 }

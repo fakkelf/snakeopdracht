@@ -8,63 +8,12 @@
  ***************************************************************************/
 
 /**
-*  @function newX
-*  @desc berekent de nieuwe waarde x na een horizontale beweging 
-*  @param {Number} x - waarde
-*  @param {Move} direction - waarde
-* @returns {Number} x - waarde
-*/
- function newX(x, direction) {
-    if (direction === MOVE.LEFT) {
-        return x - MOVE.STEP;
-    } else if (direction === MOVE.RIGHT) {
-        return x + MOVE.STEP;
-    }
-    return x;
-}
-
-/**
-* @function newY
-* @desc berekent de nieuwe waarde x na een horizontale beweging 
-* @param {Number} y - waarde
-* @param {Move} direction - waarde
-* @returns {Number} y - waarde
-*/
-function newY(y, direction) {
-    if (direction === MOVE.DOWN) {
-        return y + MOVE.STEP;
-    } else if (direction === MOVE.UP) {
-        return y - MOVE.STEP;
-    }
-    return y;
-}
-
-/**
- * @function moveSegment
- * @desc geeft een nieuwe positie (x,y) aan een segment na een beweging.
+ * @function newHead
+ * @desc geeft een segment terug welke de nieuwe kop van slang vertegenwoordig na een beweging.
  * @param {Element} segment 
- * @param {Move} direction 
+ * @param {Move} direction
+ * @return {segment}
  */
-function moveSegment(segment , direction) {
-    segment.x = newX(segment.x, direction);
-    segment.y = newY(segment.y, direction);
-}
-
-/**
- * @function isValidMove
- * @param {Number} x 
- * @param {Number} y 
- * @returns {Boolean} false wanneer de Move buiten het canvas valt, 
- *                    true wanneer de Move binnen het canvas is.
- */
-function isValidMove(x, y) {
-    if (x >= FIELD.XMIN && x <= FIELD.XMAX && y >= FIELD.YMIN && y <= FIELD.YMAX) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 function newHead(head, direction) {
     headnew = createSegment(head.x, head.y);
     
@@ -79,12 +28,18 @@ function newHead(head, direction) {
  **                 Prototype                                              **
  ***************************************************************************/
 /**
- @function Snake.prototype.gethead
- @desc vraagt het hoofdsegment op van de slang, de kop.
- @returns {array} false wanneer de slang over de rand van het canvas zou lopen,
+* @function Snake.prototype.gethead
+* @desc vraagt het hoofdsegment op van de slang, de kop.
+* @returns {array} false wanneer de slang over de rand van het canvas zou lopen,
 *                   anders true.
+* @throws Gooit een fout indien de snake geen elementen bevat.
 */
 Snake.prototype.getHead = function() {
+    // Controle op de aanwezigheid van de kop, we verwachten dat deze altijd aanwezig is.
+    // Indien niet aanwezig, gooi een fout.
+    if (this.segments.length === 2) {
+        throw new Error("Slang bestaat niet");
+    }
     return this.segments[this.segments.length - 1];
 }
 
@@ -154,7 +109,6 @@ function move(direction) {
 function Snake(segments) {
 	this.segments = [];
 	this.segments = segments;
-    
-	}
+}
     
 

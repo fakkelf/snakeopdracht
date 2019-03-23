@@ -47,7 +47,8 @@ function init() {
 function stop() {
     snake = [];
     foods = [];
-    $("#mySnakeCanvas").clearCanvas();
+   
+   resetCanvas();
 }
 
 
@@ -76,20 +77,3 @@ function move(direction) {
  **                 Hulpfuncties                                          **
  ***************************************************************************/
  
-/**
-  @function createStartSnake() -> Snake
-  @desc Slang creëren, bestaande uit  twee segmenten, 
-        in het midden van het veld
-  @return: slang volgens specificaties
-*/
-function createStartSnake() { 
-    // Defineer head
-    var headsegment = createSegment(R + FIELD.WIDTH/2, FIELD.WIDTH/2 - R);    
-    headsegment.color = SNAKE.COLORS.HEAD;  
-    // Defineer tail
-    var tailsegment = createSegment(R + FIELD.WIDTH/2, R + FIELD.WIDTH/2);    
-    var segments = [];
-    segments.push(tailsegment);
-    segments.push(headsegment);             // Kop van de slang is het laatste element.
-    snake = new Snake(segments);
-}

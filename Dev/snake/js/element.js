@@ -1,4 +1,3 @@
-
  /***************************************************************************
  **                 Hulpfuncties                                           **
  ***************************************************************************/
@@ -44,19 +43,6 @@ Element.prototype.collidesWithOneOf = function (elems) {
     }
     return false;
 } 
-
-Element.prototype.collidesWithOneOf_oud = function (elems) {
-    if (elems.length === 0) {
-        return false;
-    }
-            
-    for (i = 0; i < elems.length; i++){
-        if (elems[i].x === this.x && elems[i].y === this.y) {            
-            return true;
-        }
-    } 
-    return false;
-} 
  
  /***************************************************************************
  **                 Constructor                                            **
@@ -75,29 +61,3 @@ function Element(radius, x, y, color) {
   this.y = y;
   this.color = color;
 }
-
-
-function Element_oud(radius, x, y, color) {
-  this.radius = radius;
-  this.x = x;
-  this.y = y;
-  this.color = color;
-  
-    /**
-       @function collidesWithOneOf() -> 
-       @returns boolean 
-    */
-    this.collidesWithOneOf = function (elems) {
-        if (elems.length === 0) {
-            return false;
-        }
-                
-        for (i = 0; i < elems.length; i++){
-            if (elems[i].x === this.x && elems[i].y === this.y) {            
-                return true;
-            }
-        } 
-        return false;
-    } 
-}
-
