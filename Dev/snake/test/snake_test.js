@@ -2,42 +2,7 @@
  /***************************************************************************
  **                 Constanten                                            **
  ***************************************************************************/
-// ** Definieer basale waarden
-const R        = 10,                                // straal van een element
-      SIDELENGTH = 360;                             // Kant grootte van het veld
 
-
- const MOVE_TEMPLATE = {
-    STEP: 2 * R,                                    // stapgrootte
-    LEFT: "left",                                   // beweeg naar links
-    RIGHT: "right",                                 // beweeg naar rechts
-    UP: "up",                                       // beweeg naar boven
-    DOWN: "down"                                    // beweeg naar beneden
-};
-
-const FIELD_TEMPLATE = {
-    WIDTH: SIDELENGTH,
-    HEIGHT: SIDELENGTH,                             // hoogte veld, er moet gelden: WIDTH = HEIGHT
-    MAX: SIDELENGTH / MOVE_TEMPLATE.STEP - 1,       // netto veldbreedte 
-    XMIN: R,                                        // minimale x waarde 
-    YMIN: R,                                        // minimale y waarde 
-    XMAX: SIDELENGTH - R,                           // maximale x waarde 
-    YMAX: SIDELENGTH - R                            // maximale y waarde
-};
-const SNAKE_TEMPLATE = {
-    COLORS: {
-        HEAD: "DarkOrange",                         // kleur van de kop van de slang
-        ELEMENT: "DarkRed"                          // kleur van een slangsegment
-    },
-    SIZE: 2                                         // Start grootte van de slang
-};
-
-const SNAKE = Object.freeze(SNAKE_TEMPLATE);
-
-const FIELD = Object.freeze(FIELD_TEMPLATE);
-
-// ** Defineer immutabele objecten.
-const MOVE = Object.freeze(MOVE_TEMPLATE);
 
  /***************************************************************************
  **                 Chai                                                   **
@@ -49,7 +14,9 @@ describe("Tests voor snake.js", function () {
     
         it("When new horizontal direction, check if move is as expected", function () {
           assert.strictEqual(0, newX(20,MOVE.LEFT), "the step left is of incorrect size");
-          assert.strictEqual(40, newX(20,MOVE.RIGHT), "the step right is of incorrect size");
+         // assert.strictEqual(40, newX(20,MOVE.RIGHT), "the step right is of incorrect size");
+         // @Frank, probeer bij het testen zoveel mogelijk gebruik te maken van de constanten die je al hebt aangemaakt dit voorkomt foutieve testen
+         assert.strictEqual(40, newX(MOVE.STEP, MOVE.RIGHT), "the step right is of incorrect size");
         });
     });
 
@@ -61,7 +28,7 @@ describe("Tests voor snake.js", function () {
         });
     });
 
-    describe("isValidMove", function() {
+    describe("Functie isValidMove", function() {
     
         it("False when x > 350 of x <10", function () {
           assert.isTrue(isValidMove(350,30), 'x = 350, y = 30');
@@ -92,6 +59,17 @@ describe("Tests voor snake.js", function () {
     //       assert.isFalse(elemToCheck2.getIndexNumber(elems), "A value, of false should be returned");
     //     });
     // });
+    describe("Functie newHead", function() {       
+        
+        it("Check if returned headObject is as expected", function () {
+          assert.isTrue(newHead(Element(20,20, SNAKE.COLORS.HEAD), MOVE.LEFT), "A value of true should be returned");
+         });
+        
+    //     const elemToCheck2 = new Element(10, 30, 50, "Blue")
+    //     it("When it doesn't collide return false", function () {
+    //       assert.isFalse(elemToCheck2.getIndexNumber(elems), "A value, of false should be returned");
+    //     });
+     });
 
     // functie getHead spreekt volgens mij voor zich, dit hoeft verder niet getest te worden lijkt mij?
     // functie canmove maakte gebruik van de newX en de newY functies die we al getest hebben.

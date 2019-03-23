@@ -2,14 +2,12 @@
  /***************************************************************************
  **                 Variabelen                                             **
  ***************************************************************************/
- 
-	
 var snake,
     foods = [];                                // voedsel voor de slang
-	
+
 $(document).ready(function() {
-	$("#startSnake").click(init);  
-	$("#stopSnake").click(stop);
+    $("#startSnake").click(init);
+    $("#stopSnake").click(stop);
 });
 
 /*************************************************************************************************
@@ -35,13 +33,11 @@ $(document).ready(function() {
   @function init() -> void
   @desc Haal eventueel bestaand voedsel en een bestaande slang weg, cre\"eer een slang, genereer voedsel, en teken alles
 */
-function init() {	
-	snake = []
-	foods = []
-	
-  createStartSnake()
-  createFoods()
-	draw()  
+function init() {
+    snake = [];
+    foods = [];
+
+    setupCanvas();
 }
 
 /**
@@ -49,9 +45,9 @@ function init() {
   @desc Laat slang en voedsel verdwijnen, en teken leeg veld
 */
 function stop() {
-	snake = []
-	foods = []
-	$("#mySnakeCanvas").clearCanvas();
+    snake = [];
+    foods = [];
+    $("#mySnakeCanvas").clearCanvas();
 }
 
 
@@ -62,13 +58,12 @@ function stop() {
   @param   {string} direction de richting (een van de constanten MOVE.UP, MOVE.DOWN, MOVE.LEFT of MOVE.RIGHT)
 */
 function move(direction) {
-	if (snake.canMove(direction)) {
-		snake.doMove(direction);
-		draw();
-	}
-	else {
-		console.log("snake cannot move " + direction);
-	}
+    if (snake.canMove(direction)) {
+        snake.doMove(direction);
+        draw();
+    } else {
+        console.log("snake cannot move " + direction);
+    }
 }
 
 
@@ -87,20 +82,14 @@ function move(direction) {
         in het midden van het veld
   @return: slang volgens specificaties
 */
-function createStartSnake() {
-    
+function createStartSnake() { 
     // Defineer head
     var headsegment = createSegment(R + FIELD.WIDTH/2, FIELD.WIDTH/2 - R);    
-    headsegment.color = SNAKE.COLORS.HEAD;
-    
+    headsegment.color = SNAKE.COLORS.HEAD;  
     // Defineer tail
-    var tailsegment = createSegment(R + FIELD.WIDTH/2, R + FIELD.WIDTH/2);
-    
+    var tailsegment = createSegment(R + FIELD.WIDTH/2, R + FIELD.WIDTH/2);    
     var segments = [];
     segments.push(tailsegment);
     segments.push(headsegment);             // Kop van de slang is het laatste element.
-    
     snake = new Snake(segments);
 }
-
-
