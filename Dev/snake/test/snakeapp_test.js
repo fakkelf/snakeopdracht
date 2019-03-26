@@ -250,22 +250,6 @@ describe("Tests voor canvasutil.js", function () {
  ***************************************************************************/
 describe("Tests voor snake.js", function () {
     
-
-    // hier wil ik kijken of ik het nieuwe Head object kan vergelijken met wat er verwacht wordt.
-    // als de oude Head het Element (40,40,SNAKE.COLORS.HEAD) is, dan verwacht ik na een MOVE.LEFT
-    // een nieuwe head te zien met (20,40,SNAKE.COLORS.HEAD)
-    // 
-    // describe("Functie newHead", function() {       
-        
-    //     it("Check if returned headObject is as expected", function () {
-    //       assert.isTrue(newHead(Element(20,20, SNAKE.COLORS.HEAD), MOVE.LEFT), "A value of true should be returned");
-    //     });
-        
-    //     const elemToCheck2 = new Element(10, 30, 50, "Blue")
-    //     it("When it doesn't collide return false", function () {
-    //       assert.isFalse(elemToCheck2.getIndexNumber(elems), "A value, of false should be returned");
-    //     });
-    // });
     describe("Functie newHead", function() {       
         const startHead = createHead(80, 80);
         const nextHead = createHead(60, 80);
@@ -274,16 +258,38 @@ describe("Tests voor snake.js", function () {
           assert.deepEqual(newHead(startHead, MOVE.LEFT), nextHead, "New headObject has unexpected values");
          });
         
-    //     const elemToCheck2 = new Element(10, 30, 50, "Blue")
-    //     it("When it doesn't collide return false", function () {
-    //       assert.isFalse(elemToCheck2.getIndexNumber(elems), "A value, of false should be returned");
-    //     });
      });
+    
+    describe("Functie snake.protype.getHead", function () {
+        var headsegment = createSegment(345,80);    
+        headsegment.color = SNAKE.COLORS.HEAD;  
+        // Defineer tail
+        var tailsegment = createSegment(R + FIELD.WIDTH/2, R + FIELD.WIDTH/2);    
+     
+        var segments = [];
+        segments.push(tailsegment);
+        segments.push(headsegment);             // Kop van de slang is het laatste element.
+        snake = new Snake(segments);
+        const startHead = createHead(80, 80);
+        it("Check if returned headObject is as expected", function () {
+        assert.deepEqual(startHead, snake.getHead(), "The head of the snake is not as expected" )
+        });
+     });
+    
+    describe("Functie snake.protype.canMove", function () {
+        var headsegment = createSegment(345,80);    
+        headsegment.color = SNAKE.COLORS.HEAD;  
+        // Defineer tail
+        var tailsegment = createSegment(R + FIELD.WIDTH/2, R + FIELD.WIDTH/2);    
+        var segments = [];
+        segments.push(tailsegment);
+        segments.push(headsegment);             // Kop van de slang is het laatste element.
+        snake = new Snake(segments);
+        it("Check if returned headObject is as expected", function () {
+        assert.isFalse(snake.canMove(MOVE.RIGHT), "MOVE.RIGHT at x = 345 is invalid" )
+        });
+    })
 
-    // functie getHead spreekt volgens mij voor zich, dit hoeft verder niet getest te worden lijkt mij?
-    // functie canmove maakte gebruik van de newX en de newY functies die we al getest hebben.
-    // en tevens van de isValidMove die al getest is en  de newHead functie die hierboven staat waar ik vastloop
-    // hoe deze effectief te testen. Kan dit alleen door hulpfuncties toe te voegen in de testcode?
     // de functie doMove bevat ook andere functies zoals collidesWithOneOf die we apart testen
     // er zou hier getest kunnen worden of een segment die collides ook daadwerkelijk het voedsel verwijdert
     // en tevens de array vergroot met 1 waarbij de oude HEAD SNAKE.COLORS.ELEMENT kleur moet krijgen.

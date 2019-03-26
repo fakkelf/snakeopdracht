@@ -3,11 +3,11 @@
 ***************************************************************************/
 
 /**
-*  @function newX
-*  @desc berekent de nieuwe x waarde van een segment na een horizontale beweging 
-*  @param {Number} x - waarde
-*  @param {Move} direction - waarde
-* @returns {Number} x - waarde
+   @function newX
+   @desc berekent de nieuwe x waarde van een segment na een horizontale beweging 
+   @param {Number} x - waarde
+   @param {Move} direction - waarde
+   @returns {Number} x - waarde
 */
  function newX(x, direction) {
     if (direction === MOVE.LEFT) {
@@ -19,11 +19,11 @@
 }
 
 /**
-* @function newY
-* @desc berekent de nieuwe y waarde van een segement na een verticale beweging 
-* @param {Number} y - waarde
-* @param {Move} direction - waarde
-* @returns {Number} y - waarde
+  @function newY
+  @desc berekent de nieuwe y waarde van een segement na een verticale beweging 
+  @param {Number} y - waarde
+  @param {Move} direction - waarde
+  @returns {Number} y waarde
 */
 function newY(y, direction) {
     if (direction === MOVE.DOWN) {
@@ -46,7 +46,7 @@ function createSegment(x, y) {
 }
 
 /**
-  @function createSegment(x,y) -> Element
+  @function createHead(x,y) -> Element
   @desc Slangsegment creeren op een bepaalde plaats
   @param {number} x x-coordinaat middelpunt
   @param {number} y y-coordinaart middelpunt
