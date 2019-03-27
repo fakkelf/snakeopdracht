@@ -18,11 +18,13 @@ describe("Tests voor snakeutil.js", function () {
     const maxValue = 100;
     
     describe("Function getRandomInt", function() {
-    
+        //in deze test controleren we of the functie getRandomInt de waarde van type
+        //Number terugkeerd
         it("When Function called return a value of type number", function () {
           assert.isNumber(getRandomInt(minValue, maxValue), "Returned value is not a number");
         });
-        
+        //in deze test controleren we of the functie getRandomInt een waarde 
+        //terugkeerd tussen de grenzen minValue en maxValue   
         it("Returned value between boundaries", function () {
             var returnedValue = getRandomInt(minValue, maxValue);
             assert.isAbove(returnedValue, minValue, 'minValue = 0');
@@ -37,6 +39,8 @@ describe("Tests voor snakeutil.js", function () {
 **         - prototype function: getIndexNumber                            **
 **         - prototpe function: collidesWithOneOf                          **
 ****************************************************************************/
+
+
 describe("Tests voor element.js", function () {
     const elemA = new Element(10, 40, 50, "Blue");
     const elemB = new Element(10, 80, 60, "Red");
@@ -47,9 +51,9 @@ describe("Tests voor element.js", function () {
     elems.push(elemC);
     
     describe("Element construction", function() {
-    
+        //deze test controleert of het gecreerde Element de verwachte properties en waarden heeft
         it("When Element created check properties", function () {
-          assert.strictEqual(10, elemA.radius, "radius property not correct");
+          assert.strictEqual(10, elemA.radius, "radius property not correct");         
           assert.strictEqual(40, elemA.x, "x property not correct");
           assert.strictEqual(50, elemA.y, "y property not correct");
           assert.strictEqual("Blue", elemA.color, "color property not correct");
@@ -58,11 +62,13 @@ describe("Tests voor element.js", function () {
     
     describe("Functie getIndexNumber", function() {       
         const elemToCheck1 = new Element(10, 40, 50, "Blue")
-        
+        //hier controleren we of de methode getIndexNumber van het nieuw gecreeerde Element, een index nummer
+        //terugkeerd als het een collision heeft met de eerder gecreerde array: elems
         it("When in index return indexnumber", function () {
           assert.isAbove(10, elemToCheck1.getIndexNumber(elems), "An indexnumber should be returned");
         });
-        
+        //hier controleren we of de methode getIndexNumber van het nieuwe gecreeerde Element, -1 terugkeerd
+        //als het geen collision heeft met de eerder gecreerde array: elems
         const elemToCheck2 = new Element(10, 30, 50, "Blue")
         it("When not in index return -1", function () {
           assert.isAbove(10, elemToCheck2.getIndexNumber(elems), "A value of -1 should be returned");
@@ -93,7 +99,8 @@ describe("Tests voor food.js", function () {
     const yPos = 50; 
     
     describe("Function createFood", function() {
-    
+        //deze test controleert of de fucntie createFood het verwachte nieuwe 
+        //Element terugkeerd met de juiste properties en waarden
         it("When food object created check properties", function () {
             var food = createFood(xPos, yPos);
             
@@ -117,7 +124,8 @@ describe("Tests voor segment.js", function () {
     const yPos = 80; 
     
     describe("Functie newX", function() {
-
+        //we controleren hier of the functie newX een nieuwe verwachte positie x creert op basis van
+        //de MOVE
         it("When new horizontal direction, check if move is as expected", function () {
             assert.strictEqual(0, newX(20, MOVE.LEFT), "the step left is of incorrect size");
             assert.strictEqual(40, newX(20, MOVE.RIGHT), "the step right is of incorrect size");
@@ -125,7 +133,8 @@ describe("Tests voor segment.js", function () {
     });
     
     describe("Functie newY", function() {
-
+        //we controleren hier of the functie newY een nieuwe verwachte positie y creert op basis van
+        //de MOVE 
         it("When new vertical direction, check if move is as expected", function () {
             assert.strictEqual(0, newY(20, MOVE.UP), "the step up is of incorrect size");
             assert.strictEqual(40, newY(20, MOVE.DOWN), "the step down is of incorrect size");
@@ -133,7 +142,8 @@ describe("Tests voor segment.js", function () {
     }); 
     
     describe("Function createSegment", function() {
-    
+        //deze test controleert of de functie createSegment het juiste Object met 
+        //de verwachte properties en waarden creeert
         it("When segment object created check properties", function () {
             var segment = createSegment(xPos, yPos);
             
@@ -145,7 +155,8 @@ describe("Tests voor segment.js", function () {
     });  
 
     describe("Function createHead", function() {
-    
+        //deze test controleert of de functie createHead het juiste Object met 
+        //de verwachte properties en waarden creeert
         it("When head object created check properties", function () {
             var head = createHead(xPos, yPos);
             
@@ -159,11 +170,11 @@ describe("Tests voor segment.js", function () {
     
 /*****************************************************************************
 **     Draw                                                                 **  
-**         - function:                                                      **
+**          - function:                                                     **
 *****************************************************************************/
 
 /*****************************************************************************
-**      CanvasUtil                                                          **
+**     CanvasUtil                                                          **
 **          - function: moveSegment                                         **
 **          - function: isValidMove                                         **
 **          - function: createStartSnake                                    **
@@ -184,39 +195,41 @@ describe("Tests voor canvasutil.js", function () {
 
         it("Correct move for LEFT", function () {
             moveSegment(segmentLeft, MOVE.LEFT);
-            assert.strictEqual(segmentLeft.x, xPos - MOVE.STEP, "Move to left not successfull");
+            assert.strictEqual(segmentLeft.x, xPos - MOVE.STEP, "Move to left not successful");
         });
         
         it("Correct move for RIGHT", function () {
             moveSegment(segmentRight, MOVE.RIGHT);
-            assert.strictEqual(segmentRight.x, xPos + MOVE.STEP, "Move to right not successfull");
+            assert.strictEqual(segmentRight.x, xPos + MOVE.STEP, "Move to right not successful");
         });
         
         it("Correct move for UP", function () {
             moveSegment(segmentUp, MOVE.UP);
-            assert.strictEqual(segmentUp.y, yPos - MOVE.STEP, "Move to up not successfull");
+            assert.strictEqual(segmentUp.y, yPos - MOVE.STEP, "Move to up not successful");
         });
         
         it("Correct move for DOWN", function () {
             moveSegment(segmentDown, MOVE.DOWN);
-            assert.strictEqual(segmentDown.y, yPos + MOVE.STEP, "Move to down not successfull");
+            assert.strictEqual(segmentDown.y, yPos + MOVE.STEP, "Move to down not successful");
         });
     });
 
     describe("Functie isValidMove", function() {
-
+        //in deze test controleren we of de functie isValidMove een horizontale beweging dat de snake buiten het canvas 
+        //plaatst ongeldig is en binnen het canvas geldig.
         it("False when x > 350 of x <10", function () {
             assert.isTrue(isValidMove(350,30), 'x = 350, y = 30');
+            assert.isTrue(isValidMove(10,30), 'x = 11, y = 30');
             assert.isFalse(isValidMove(351,30), 'x = 351, y = 30');
             assert.isFalse(isValidMove(9,30), 'x = 9, y = 30');
-            assert.isTrue(isValidMove(10,30), 'x = 11, y = 30');
         });
-
+        //in deze test controleren we of de functie isValidMove een verticale beweging dat de snake buiten het canvas 
+        //plaatst ongeldig is en binnen het canvas geldig.
         it("False when y > 350 of y <10", function () {
             assert.isTrue(isValidMove(30,350), 'x = 350, y = 30');
+            assert.isTrue(isValidMove(30,10), 'x = 11, y = 30');
             assert.isFalse(isValidMove(30,351), 'x = 351, y = 30');
             assert.isFalse(isValidMove(30,9), 'x = 9, y = 30');
-            assert.isTrue(isValidMove(30,10), 'x = 11, y = 30');
         });
     });
     
@@ -224,9 +237,9 @@ describe("Tests voor canvasutil.js", function () {
         
         it("When snake object created check properties", function () {
             createStartSnake();
-            
+            //heeft snake de property segments na het starten van functie createStartSnake
             assert.property(snake, 'segments', "no segments found");
-            
+            //de snake bestaat uit 2 segmenten
             var snakeSegments = snake.segments;
             assert.strictEqual(snakeSegments.length, 2, "Snake has wrong number of segments");                
         }); 
@@ -236,9 +249,9 @@ describe("Tests voor canvasutil.js", function () {
         
         it("When snake object created check properties", function () {
             createStartSnake_Alt();
-            
+            //heeft snake de property segments na het starten van functie createStartSnake
             assert.property(snake, 'segments', "no segments found");
-            
+            //de snake bestaat uit 2 segmenten
             var headColor = snake.segments[1].color;
             assert.strictEqual(headColor, SNAKE.COLORS.HEAD, "Snake head has wrong color");                
         }); 
@@ -253,31 +266,29 @@ describe("Tests voor snake.js", function () {
     describe("Functie newHead", function() {       
         const startHead = createHead(80, 80);
         const nextHead = createHead(60, 80);
-        
-        assertRunOrder(1)
-
+       
         it("Check if returned headObject is as expected", function () {
           assert.deepEqual(newHead(startHead, MOVE.LEFT), nextHead, "New headObject has unexpected values");
          });
-        
-     });
+    });
     
     describe("Functie snake.protype.getHead", function () {
-        
-      assertRunOrder(2)
-
         createStartSnake()
+       
         const startHead = createHead(190, 170);
         it("Check if the created head, returns an object that ties in with the position it has been given", function () {
         assert.deepEqual(startHead, snake.getHead(), "The head of the snake is not as expected" )
         });
-     });
+    });
     
-    
+    //bij deze test creeren we een nieuwe snake met een positie dicht bij de rand van het canvas om de 
+    //functie canMove te testen. 
+    //de getHead() functie in snake.js refereert nog steeds naar de originele snake gecreeerd via createStartSnake()
+    //heb ik het vermoeden. Na het aanroepen van de test canMove pakt de getHead het hoofd van de originele snake.
+    //hoewel ik een nieuw snake object heb gecreerd, dit begrijp ik niet.
     describe("Functie snake.protype.canMove", function () {
-        
-        assertRunOrder(3)
-
+       
+        foods = [];
         var headsegment = createSegment(345,80);    
         headsegment.color = SNAKE.COLORS.HEAD;  
         // Defineer tail
@@ -286,16 +297,40 @@ describe("Tests voor snake.js", function () {
         segments.push(tailsegment);
         segments.push(headsegment);             // Kop van de slang is het laatste element.
         snake = new Snake(segments);
-        console.log(snake.segments[0].x + "x van snake segment 0")
+        console.log(snake.segments[0].x + "x van snake segment 0 en segment 1 zijn beide 345 in de canmove test" + snake.segments[1].x)
+        console.log (snake.segments.length +"lengte van de snake array in canMove is ook 2")
+        console.log ("hoe kan het dat snake.canMove nog verwijst naar de snake array met de nieuwe posities?")
+        console.log ("terwijl in de functie canMove, this.getHead een andere snake pakt met x 190?")
         it("Check if the move can is valid", function () {
         assert.isFalse(snake.canMove(MOVE.RIGHT), "MOVE.RIGHT at x = 345 is invalid" )
         });
-
     })
+    
 
+    describe("Functie snake.protype.doMove", function () {
+        var headsegment = createSegment(210,170);  
+        var tailsegment = createSegment(210,150);
+        foods = [];
+        createStartSnake();
+        createFoods();
+        nexthead = newHead(this.getHead(), MOVE.RIGHT);
+    
+    if (nexthead.collidesWithOneOf(foods)) {
+        foods.splice(nexthead.getIndexNumber(foods), 1);
+    } else {        
+        this.segments.shift();
+    }
+        it("Check if the move is as expected", function () {
+        assert.deepEqual(nextHead, headsegment, "The head of the snake has not moved to the expected position" )
+        });    
+
+        it("Check if segments have shifted", function () {
+            assert.deepEqual(snake.segments[0], tailsegment, "The head of the snake has not moved to the expected position" )
+            });  
+    })
     //1 verplaatsen binnen speelveld
     //
-
+ 
     // de functie doMove bevat ook andere functies zoals collidesWithOneOf die we apart testen
     // er zou hier getest kunnen worden of een segment die collides ook daadwerkelijk het voedsel verwijdert
     // en tevens de array vergroot met 1 waarbij de oude HEAD SNAKE.COLORS.ELEMENT kleur moet krijgen.

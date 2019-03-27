@@ -5,7 +5,7 @@
 /**
    @function moveSegment -> void
    @desc geeft een nieuwe positie (x,y) aan een segment na een beweging.
-   @param {Element} - segment 
+   @param {Element} segment 
    @param {Move} direction 
  */
 function moveSegment(segment , direction) {
@@ -78,14 +78,14 @@ function createStartSnake_Alt() {
 */
 function createFoods() {   
     var  i,    
-        food;
+        food,
     i = 0; 
     //we gebruiken een while omdat we, om een arraymethode te gebruiken, eerst een nieuw array zouden moeten creëren (met NUMFOODS elementen)
     while (i < FOOD.NUMBER ) {
         food = createFood(FIELD.XMIN + getRandomInt(0, FIELD.MAX) * MOVE.STEP, FIELD.YMIN + getRandomInt(0, FIELD.MAX) * MOVE.STEP);
         if (!food.collidesWithOneOf(snake.segments) && !food.collidesWithOneOf(foods) ) {
             foods.push(food);
-            i++
+            i++;
         }  
     }  
 }

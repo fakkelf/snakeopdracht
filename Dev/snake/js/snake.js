@@ -37,6 +37,7 @@ function newHead(head, direction) {
 Snake.prototype.getHead = function() {
     // Controle op de aanwezigheid van de kop, we verwachten dat deze altijd aanwezig is.
     // Indien niet aanwezig, gooi een fout.
+    console.log (this.segments[0].x)
     if (this.segments.length < 2) {
         throw new Error("Slang bestaat niet");
     }
@@ -52,7 +53,9 @@ Snake.prototype.getHead = function() {
 */
 Snake.prototype.canMove = function(direction) {
     head = this.getHead();
-    return isValidMove(newX(head.x, direction), newY(head.y, direction));
+    console.log (head.x + "x is 190 ipv 345 enig idee waar dit misgaat? this lijkt naar een ander snake Object te wijzen")
+    console.log (snake.segments.length +"lengte is 2, wat bevestigt dat this naar een ander snake Object wijst dan ik in de test canMove gecreeerd")
+    return isValidMove(newX(head.x, direction), newY(head.y, direction,));
 }
 
 /**
