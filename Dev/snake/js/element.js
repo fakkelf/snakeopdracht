@@ -1,3 +1,4 @@
+
  /***************************************************************************
  **                 Hulpfuncties                                           **
  ***************************************************************************/
@@ -37,7 +38,7 @@ Element.prototype.collidesWithOneOf = function (elems) {
     if (elems.length === 0) {
         return false;
     }
-    
+    //controleer of de twee arrays van het type Element met elkaar colliden.
     if (this.getIndexNumber(elems) > -1) {
         return true;
     }
@@ -51,8 +52,8 @@ Element.prototype.collidesWithOneOf = function (elems) {
 /**
    @constructor Element
    @param radius straal
-   @param {number} x x-coordinaat middelpunt
-   @param {number} y y-coordinaat middelpunt
+   @param {number} x - x-coordinaat middelpunt
+   @param {number} y - y-coordinaat middelpunt
    @param {string} color kleur van het element
 */ 
 function Element(radius, x, y, color) {
@@ -61,3 +62,4 @@ function Element(radius, x, y, color) {
   this.y = y;
   this.color = color;
 }
+

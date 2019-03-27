@@ -37,7 +37,7 @@ function newHead(head, direction) {
 Snake.prototype.getHead = function() {
     // Controle op de aanwezigheid van de kop, we verwachten dat deze altijd aanwezig is.
     // Indien niet aanwezig, gooi een fout.
-    if (this.segments.length !== 2) {
+    if (this.segments.length < 2) {
         throw new Error("Slang bestaat niet");
     }
     return this.segments[this.segments.length - 1];
@@ -46,13 +46,12 @@ Snake.prototype.getHead = function() {
 /**
  @function Snake.prototype.canMove
  @desc Controleert of slang mag bewegen in de aangegeven richting
- @param {string} direction de richting (een van de constanten MOVE.UP, MOVE.DOWN, MOVE.LEFT of MOVE.RIGHT)
+ @param {string} direction - de richting (een van de constanten MOVE.UP, MOVE.DOWN, MOVE.LEFT of MOVE.RIGHT)
  @returns {boolean} false wanneer de slang over de rand van het canvas zou lopen,
 *                   anders true.
 */
 Snake.prototype.canMove = function(direction) {
     head = this.getHead();
-    
     return isValidMove(newX(head.x, direction), newY(head.y, direction));
 }
 
@@ -76,12 +75,10 @@ Snake.prototype.doMove = function(direction) {
 }
 
  /***************************************************************************
- **                 Constructor                                            **
+ **                 hulpfunctie                                            **
  ***************************************************************************/
  
-
-
-/**
+ /**
   @function move(direction) -> void
   @desc Beweeg slang in aangegeven richting
         tenzij slang uit canvas zou verdwijnen  

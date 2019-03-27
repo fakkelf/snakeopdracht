@@ -56,7 +56,7 @@ function stop() {
   @function move(direction) -> void
   @desc Beweeg slang in aangegeven richting
         tenzij slang uit canvas zou verdwijnen  
-  @param   {string} direction de richting (een van de constanten MOVE.UP, MOVE.DOWN, MOVE.LEFT of MOVE.RIGHT)
+  @param   {string} direction - de richting (een van de constanten MOVE.UP, MOVE.DOWN, MOVE.LEFT of MOVE.RIGHT)
 */
 function move(direction) {
     if (snake.canMove(direction)) {

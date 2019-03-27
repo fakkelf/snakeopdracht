@@ -3,10 +3,10 @@
  ***************************************************************************/
 
 /**
- * @function moveSegment
- * @desc geeft een nieuwe positie (x,y) aan een segment na een beweging.
- * @param {Element} segment 
- * @param {Move} direction 
+   @function moveSegment -> void
+   @desc geeft een nieuwe positie (x,y) aan een segment na een beweging.
+   @param {Element} - segment 
+   @param {Move} direction 
  */
 function moveSegment(segment , direction) {
     segment.x = newX(segment.x, direction);
@@ -14,10 +14,10 @@ function moveSegment(segment , direction) {
 }
 
 /**
- * @function isValidMove
- * @param {Number} x 
- * @param {Number} y 
- * @returns {Boolean} false wanneer de Move buiten het canvas valt, 
+   @function isValidMove -> Boolean
+   @param {Number} x 
+   @param {Number} y 
+   @returns {Boolean} false wanneer de Move buiten het canvas valt, 
  *                    true wanneer de Move binnen het canvas is.
  */
 function isValidMove(x, y) {
@@ -56,6 +56,7 @@ function createStartSnake() {
         in het midden van het veld
   @return: slang volgens specificaties
 */
+
 function createStartSnake_Alt() {
     // Alternative implementatie waarbij de kleur van het segment vooraf wordt bepaald.
     // Defineer kop van de slang
@@ -76,10 +77,10 @@ function createStartSnake_Alt() {
   @return [Element] array met food
 */
 function createFoods() {   
-   var  i,    
+    var  i,    
         food;
-   i = 0; 
-   //we gebruiken een while omdat we, om een arraymethode te gebruiken, eerst een nieuw array zouden moeten creëren (met NUMFOODS elementen)
+    i = 0; 
+    //we gebruiken een while omdat we, om een arraymethode te gebruiken, eerst een nieuw array zouden moeten creëren (met NUMFOODS elementen)
     while (i < FOOD.NUMBER ) {
         food = createFood(FIELD.XMIN + getRandomInt(0, FIELD.MAX) * MOVE.STEP, FIELD.YMIN + getRandomInt(0, FIELD.MAX) * MOVE.STEP);
         if (!food.collidesWithOneOf(snake.segments) && !food.collidesWithOneOf(foods) ) {
@@ -89,9 +90,7 @@ function createFoods() {
     }  
 }
 
-
-
- /***************************************************************************
+/***************************************************************************
  **     functies voor het opbouwen het canvas                              **
  ***************************************************************************/
  
@@ -114,3 +113,4 @@ function setupCanvas() {
 function resetCanvas() {
     $("#mySnakeCanvas").clearCanvas();
 }
+

@@ -58,8 +58,8 @@ const FIELD_TEMPLATE = {
     @desc Mogelijkheden om te kunnen bewegen over het veld.
     @type MOVE
     @property {number} STEP - Stap grootte (2 * R).
-    @property {string} Left - Beweeg een stap naar links.
-    @property {string} RIGT - Beweeg een stap naar rechts.
+    @property {string} LEFT - Beweeg een stap naar links.
+    @property {string} RIGHT - Beweeg een stap naar rechts.
     @property {string} UP   - Beweeg een stap naar boven.
     @property {string} DOWN - Beweeg een stap naar onder.
 */

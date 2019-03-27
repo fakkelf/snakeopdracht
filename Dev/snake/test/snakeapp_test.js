@@ -254,6 +254,8 @@ describe("Tests voor snake.js", function () {
         const startHead = createHead(80, 80);
         const nextHead = createHead(60, 80);
         
+        assertRunOrder(1)
+
         it("Check if returned headObject is as expected", function () {
           assert.deepEqual(newHead(startHead, MOVE.LEFT), nextHead, "New headObject has unexpected values");
          });
@@ -261,34 +263,38 @@ describe("Tests voor snake.js", function () {
      });
     
     describe("Functie snake.protype.getHead", function () {
-        var headsegment = createSegment(345,80);    
-        headsegment.color = SNAKE.COLORS.HEAD;  
-        // Defineer tail
-        var tailsegment = createSegment(R + FIELD.WIDTH/2, R + FIELD.WIDTH/2);    
-     
-        var segments = [];
-        segments.push(tailsegment);
-        segments.push(headsegment);             // Kop van de slang is het laatste element.
-        snake = new Snake(segments);
-        const startHead = createHead(80, 80);
-        it("Check if returned headObject is as expected", function () {
+        
+      assertRunOrder(2)
+
+        createStartSnake()
+        const startHead = createHead(190, 170);
+        it("Check if the created head, returns an object that ties in with the position it has been given", function () {
         assert.deepEqual(startHead, snake.getHead(), "The head of the snake is not as expected" )
         });
      });
     
+    
     describe("Functie snake.protype.canMove", function () {
+        
+        assertRunOrder(3)
+
         var headsegment = createSegment(345,80);    
         headsegment.color = SNAKE.COLORS.HEAD;  
         // Defineer tail
-        var tailsegment = createSegment(R + FIELD.WIDTH/2, R + FIELD.WIDTH/2);    
+        var tailsegment = createSegment(345,60);    
         var segments = [];
         segments.push(tailsegment);
         segments.push(headsegment);             // Kop van de slang is het laatste element.
         snake = new Snake(segments);
-        it("Check if returned headObject is as expected", function () {
+        console.log(snake.segments[0].x + "x van snake segment 0")
+        it("Check if the move can is valid", function () {
         assert.isFalse(snake.canMove(MOVE.RIGHT), "MOVE.RIGHT at x = 345 is invalid" )
         });
+
     })
+
+    //1 verplaatsen binnen speelveld
+    //
 
     // de functie doMove bevat ook andere functies zoals collidesWithOneOf die we apart testen
     // er zou hier getest kunnen worden of een segment die collides ook daadwerkelijk het voedsel verwijdert

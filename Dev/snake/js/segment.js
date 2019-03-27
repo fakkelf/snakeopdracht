@@ -7,13 +7,14 @@
    @desc berekent de nieuwe x waarde van een segment na een horizontale beweging 
    @param {Number} x - waarde
    @param {Move} direction - waarde
-   @returns {Number} x - waarde
+   @returns {Number} x waarde
 */
  function newX(x, direction) {
     if (direction === MOVE.LEFT) {
-        return x - MOVE.STEP;
-    } else if (direction === MOVE.RIGHT) {
-        return x + MOVE.STEP;
+      return x - MOVE.STEP;
+    } 
+    else if (direction === MOVE.RIGHT) {
+      return x + MOVE.STEP;
     }
     return x;
 }
@@ -34,11 +35,16 @@ function newY(y, direction) {
     return y;
 }
 
+ /***************************************************************************
+ **     functies voor het creeeren van de segmenten van de slang     **
+ ***************************************************************************/
+
+
 /**
   @function createSegment(x,y) -> Element
   @desc Slangsegment creeren op een bepaalde plaats
-  @param {number} x x-coordinaat middelpunt
-  @param {number} y y-coordinaart middelpunt
+  @param {number} x - x-coordinaat middelpunt
+  @param {number} y - y-coordinaart middelpunt
   @return: {Element} met straal R en color SNAKE.COLORS.ELEMENT
 */
 function createSegment(x, y) {
@@ -48,8 +54,8 @@ function createSegment(x, y) {
 /**
   @function createHead(x,y) -> Element
   @desc Slangsegment creeren op een bepaalde plaats
-  @param {number} x x-coordinaat middelpunt
-  @param {number} y y-coordinaart middelpunt
+  @param {number} x - x-coordinaat middelpunt
+  @param {number} y - y-coordinaart middelpunt
   @return: {Element} met straal R en color SNAKE.COLORS.HEAD
 */
 function createHead(x, y) {
