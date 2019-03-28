@@ -5,7 +5,7 @@
 var snake,
     foods = [];                                // voedsel voor de slang
 
-$(document).ready(function() {
+$(document).ready(function () {
     $("#startSnake").click(init);
     $("#stopSnake").click(stop);
 });
@@ -17,12 +17,11 @@ $(document).ready(function() {
  /***************************************************************************
  **                 Constructors                                          **
  ***************************************************************************/
- 
+
  /***************************************************************************
  **                 Hulpfuncties                                          **
  ***************************************************************************/
- 
- 
+
  /*************************************************************************************************
  **                                    Gegeven code                                              **
  *************************************************************************************************/
@@ -47,15 +46,15 @@ function init() {
 function stop() {
     snake = [];
     foods = [];
-   
-   resetCanvas();
+
+    resetCanvas();
 }
 
 
 /**
   @function move(direction) -> void
   @desc Beweeg slang in aangegeven richting
-        tenzij slang uit canvas zou verdwijnen  
+        tenzij slang uit canvas zou verdwijnen
   @param   {string} direction - de richting (een van de constanten MOVE.UP, MOVE.DOWN, MOVE.LEFT of MOVE.RIGHT)
 */
 function move(direction) {
@@ -71,9 +70,8 @@ function move(direction) {
 /***************************************************************************
  **                 Constructors                                          **
  ***************************************************************************/
-   
 
-/***************************************************************************
+
+ /***************************************************************************
  **                 Hulpfuncties                                          **
  ***************************************************************************/
- 

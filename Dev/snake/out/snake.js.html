@@ -30,102 +30,97 @@
  /***************************************************************************
  **                 Variabelen                                             **
  ***************************************************************************/
-  
+
  /***************************************************************************
  **                 Hulpfuncties                                           **
  ***************************************************************************/
-function newX(x, direction) {
-    if (direction === MOVE.LEFT) {
-        return x - MOVE.STEP;
-    } else if (direction === MOVE.RIGHT) {
-        return x + MOVE.STEP;
-    }
-    return x;
-}
 
-function newY(y, direction) {
-    if (direction === MOVE.DOWN) {
-        return y + MOVE.STEP;
-    } else if (direction === MOVE.UP) {
-        return y - MOVE.STEP;
-    }
-    return y;
-}
-
-function moveSegment(segment , direction) {
-    segment.x = newX(segment.x, direction);
-    segment.y = newY(segment.y, direction);
-}
-
-function isValidMove(x, y) {
-    if (x >= FIELD.XMIN &amp;&amp; x &lt;= FIELD.XMAX &amp;&amp; y >= FIELD.YMIN &amp;&amp; y &lt;= FIELD.YMAX) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
+/**
+ * @function newHead
+ * @desc geeft een segment terug welke de nieuwe kop van slang vertegenwoordigt na een beweging.
+ * @param {Element} segment
+ * @param {Move} direction
+ * @return {segment}
+ */
 function newHead(head, direction) {
     headnew = createSegment(head.x, head.y);
-    
+
     moveSegment(headnew, direction);
-    
+
     headnew.color = SNAKE.COLORS.HEAD;
-    
+
     return headnew;
 }
 
  /***************************************************************************
  **                 Prototype                                              **
  ***************************************************************************/
-
-Snake.prototype.getHead = function() {
+/**
+* @function Snake.prototype.gethead
+* @desc vraagt het hoofdsegment op van de slang, de kop.
+* @returns {array} false wanneer de slang over de rand van het canvas zou lopen,
+*                   anders true.
+* @throws Gooit een fout indien de snake geen elementen bevat.
+*/
+Snake.prototype.getHead = function () {
+    // Controle op de aanwezigheid van de kop, we verwachten dat deze altijd aanwezig is.
+    // Indien niet aanwezig, gooi een fout.
+    if (this.segments.length &lt; 1) {
+        throw new Error("Slang bestaat niet");
+    }
     return this.segments[this.segments.length - 1];
-}
+};
 
 /**
-Prototype Snake function
+ @function Snake.prototype.canMove
+ @desc Controleert of slang mag bewegen in de aangegeven richting
+ @param {string} direction - de richting (een van de constanten MOVE.UP, MOVE.DOWN, MOVE.LEFT of MOVE.RIGHT)
+ @returns {boolean} false wanneer de slang over de rand van het canvas zou lopen,
+*                   anders true.
 */
-Snake.prototype.canMove = function(direction) {
+Snake.prototype.canMove = function (direction) {
     head = this.getHead();
-    
     return isValidMove(newX(head.x, direction), newY(head.y, direction));
-}
+};
 
-Snake.prototype.doMove = function(direction) {
-    
+/**
+ @function Snake.prototype.doMove
+ @desc Beweegt de slang in de aangegeven richting
+ @param {string} direction de richting (een van de constanten MOVE.UP, MOVE.DOWN, MOVE.LEFT of MOVE.RIGHT)
+*/
+Snake.prototype.doMove = function (direction) {
+
     nexthead = newHead(this.getHead(), direction);
-    
+    //Als er een collision is met voedsel dan groeit de slang en wordt het voedsel weggehaald
     if (nexthead.collidesWithOneOf(foods)) {
         foods.splice(nexthead.getIndexNumber(foods), 1);
-    } else {        
+    } else {
+		//Geen collision betekent dat het eerste segment verwijdert wordt hierdoor is de lengte van de slang tijdelijk 1
+		//Totdat later de nieuwe kop segment van de slang wordt toegevoegd
         this.segments.shift();
     }
-    
-    this.getHead().color = SNAKE.COLORS.ELEMENT;
-    this.segments.push(nexthead);
-}
+
+    this.getHead().color = SNAKE.COLORS.ELEMENT; // de oude kop verandert van kleur
+    this.segments.push(nexthead);   // nieuwe kop van slang wordt toegevoegd
+};
 
  /***************************************************************************
- **                 Constructor                                            **
+ **                 hulpfunctie                                            **
  ***************************************************************************/
- 
 
-
-/**
+ /**
   @function move(direction) -> void
   @desc Beweeg slang in aangegeven richting
-        tenzij slang uit canvas zou verdwijnen  
+        tenzij slang uit canvas zou verdwijnen
   @param   {string} direction de richting (een van de constanten MOVE.UP, MOVE.DOWN, MOVE.LEFT of MOVE.RIGHT)
 */
 function move(direction) {
-	if (snake.canMove(direction)) {
-		snake.doMove(direction);
-		draw();
-	}
-	else {
-		console.log("snake cannot move " + direction);
-	}
+    if (snake.canMove(direction)) {
+        snake.doMove(direction);
+        draw();
+    } else {
+        console.log("snake cannot move " + direction);
+    }
 }
 
 
@@ -134,17 +129,13 @@ function move(direction) {
  ***************************************************************************/
 /**
    @constructor Snake
-   @param {[Element] segments een array met aaneengesloten slangsegmenten
-                   Het laatste element van segments wordt de kop van de slang 
-*/ 
+   @param {[Element]} segments een array met aaneengesloten slangsegmenten
+                      Het laatste element van segments wordt de kop van de slang
+*/
 function Snake(segments) {
-	this.segments = [];
-	this.segments = segments;
-    
-	}
-    
-
-</code></pre>
+    this.segments = [];
+    this.segments = segments;
+}</code></pre>
         </article>
     </section>
 
@@ -154,13 +145,13 @@ function Snake(segments) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="Snake.html">Snake</a></li></ul><h3>Global</h3><ul><li><a href="global.html#collidesWithOneOf">collidesWithOneOf</a></li><li><a href="global.html#collidesWithOneOf()-%253E">collidesWithOneOf() -></a></li><li><a href="global.html#createFoods()-%253Earraymetfood">createFoods() -> array met food</a></li><li><a href="global.html#createStartSnake()-%253ESnake">createStartSnake() -> Snake</a></li><li><a href="global.html#draw()-%253Evoid">draw() -> void</a></li><li><a href="global.html#FIELD">FIELD</a></li><li><a href="global.html#FOOD">FOOD</a></li><li><a href="global.html#getIndexNumber">getIndexNumber</a></li><li><a href="global.html#init()-%253Evoid">init() -> void</a></li><li><a href="global.html#MOVE">MOVE</a></li><li><a href="global.html#move(direction)-%253Evoid">move(direction) -> void</a></li><li><a href="global.html#R">R</a></li><li><a href="global.html#SIDELENGTH">SIDELENGTH</a></li><li><a href="global.html#SNAKE">SNAKE</a></li><li><a href="global.html#stop()-%253Evoid">stop() -> void</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="Snake.html">Snake</a></li></ul><h3>Global</h3><ul><li><a href="global.html#collidesWithOneOf">collidesWithOneOf</a></li><li><a href="global.html#createFoods()-%253Earraymetfood">createFoods() -> array met food</a></li><li><a href="global.html#createStartSnake()-%253ESnake">createStartSnake() -> Snake</a></li><li><a href="global.html#draw()-%253Evoid">draw() -> void</a></li><li><a href="global.html#FIELD">FIELD</a></li><li><a href="global.html#FOOD">FOOD</a></li><li><a href="global.html#getIndexNumber">getIndexNumber</a></li><li><a href="global.html#init()-%253Evoid">init() -> void</a></li><li><a href="global.html#isValidMove-%253EBoolean">isValidMove -> Boolean</a></li><li><a href="global.html#MOVE">MOVE</a></li><li><a href="global.html#move(direction)-%253Evoid">move(direction) -> void</a></li><li><a href="global.html#moveSegment-%253Evoid">moveSegment -> void</a></li><li><a href="global.html#newHead">newHead</a></li><li><a href="global.html#newX">newX</a></li><li><a href="global.html#newY">newY</a></li><li><a href="global.html#R">R</a></li><li><a href="global.html#resetCanvas-%253Evoid">resetCanvas -> void</a></li><li><a href="global.html#setupCanvas-%253Evoid">setupCanvas -> void</a></li><li><a href="global.html#SIDELENGTH">SIDELENGTH</a></li><li><a href="global.html#SNAKE">SNAKE</a></li><li><a href="global.html#stop()-%253Evoid">stop() -> void</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Mar 18 2019 19:08:26 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Mar 28 2019 18:59:06 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

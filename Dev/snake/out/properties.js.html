@@ -30,13 +30,13 @@
  /***************************************************************************
  **                 Basale waarden                                         **
  ***************************************************************************/
-/** 
+/**
     @constant
     @type {number}
     @desc Straal van een element
 */
 const R             = 10;                              // straal van een element
-/** 
+/**
     @constant
     @type {number}
     @desc Kant grootte van het veld
@@ -66,48 +66,47 @@ const SNAKE_TEMPLATE = {
 const FOOD_TEMPLATE = {
     COLOR: "Olive",                                 // kleur van voedsel
     NUMBER: 15                                      // Aantal voedsel elementen
-}
+};
 
 const FIELD_TEMPLATE = {
     WIDTH: SIDELENGTH,
     HEIGHT: SIDELENGTH,                             // hoogte veld, er moet gelden: WIDTH = HEIGHT
-    MAX: SIDELENGTH / MOVE_TEMPLATE.STEP - 1,       // netto veldbreedte 
-    XMIN: R,                                        // minimale x waarde 
-    YMIN: R,                                        // minimale y waarde 
-    XMAX: SIDELENGTH - R,                           // maximale x waarde 
+    MAX: SIDELENGTH / MOVE_TEMPLATE.STEP - 1,       // netto veldbreedte
+    XMIN: R,                                        // minimale x waarde
+    YMIN: R,                                        // minimale y waarde
+    XMAX: SIDELENGTH - R,                           // maximale x waarde
     YMAX: SIDELENGTH - R                            // maximale y waarde
 };
 
 // ** Defineer immutabele objecten.
 
- 
- /** 
+ /**
     @constant
     @desc Mogelijkheden om te kunnen bewegen over het veld.
     @type MOVE
     @property {number} STEP - Stap grootte (2 * R).
-    @property {string} Left - Beweeg een stap naar links.
-    @property {string} RIGT - Beweeg een stap naar rechts.
+    @property {string} LEFT - Beweeg een stap naar links.
+    @property {string} RIGHT - Beweeg een stap naar rechts.
     @property {string} UP   - Beweeg een stap naar boven.
     @property {string} DOWN - Beweeg een stap naar onder.
 */
 const MOVE = Object.freeze(MOVE_TEMPLATE);
- /** 
+ /**
     @constant
     @type SNAKE
 
 */
 const SNAKE = Object.freeze(SNAKE_TEMPLATE);
- /** 
+ /**
     @constant
     @type FOOD
 */
 const FOOD = Object.freeze(FOOD_TEMPLATE);
- /** 
+ /**
     @constant
     @type FIELD
-    @property {string} COLOR    - Beweeg een stap naar links.
-    @property {number} NUMBER   - Kleur van een voedsel element.
+    @property {string} COLOR    - Kleur van een voedsel element.
+    @property {number} NUMBER   - Aantal voedsel elementen op het veld.
 */
 const FIELD = Object.freeze(FIELD_TEMPLATE);
 
@@ -122,13 +121,13 @@ const FIELD = Object.freeze(FIELD_TEMPLATE);
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="Snake.html">Snake</a></li></ul><h3>Global</h3><ul><li><a href="global.html#collidesWithOneOf">collidesWithOneOf</a></li><li><a href="global.html#collidesWithOneOf()-%253E">collidesWithOneOf() -></a></li><li><a href="global.html#createFoods()-%253Earraymetfood">createFoods() -> array met food</a></li><li><a href="global.html#createStartSnake()-%253ESnake">createStartSnake() -> Snake</a></li><li><a href="global.html#draw()-%253Evoid">draw() -> void</a></li><li><a href="global.html#FIELD">FIELD</a></li><li><a href="global.html#FOOD">FOOD</a></li><li><a href="global.html#getIndexNumber">getIndexNumber</a></li><li><a href="global.html#init()-%253Evoid">init() -> void</a></li><li><a href="global.html#MOVE">MOVE</a></li><li><a href="global.html#move(direction)-%253Evoid">move(direction) -> void</a></li><li><a href="global.html#R">R</a></li><li><a href="global.html#SIDELENGTH">SIDELENGTH</a></li><li><a href="global.html#SNAKE">SNAKE</a></li><li><a href="global.html#stop()-%253Evoid">stop() -> void</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="Snake.html">Snake</a></li></ul><h3>Global</h3><ul><li><a href="global.html#collidesWithOneOf">collidesWithOneOf</a></li><li><a href="global.html#createFoods()-%253Earraymetfood">createFoods() -> array met food</a></li><li><a href="global.html#createStartSnake()-%253ESnake">createStartSnake() -> Snake</a></li><li><a href="global.html#draw()-%253Evoid">draw() -> void</a></li><li><a href="global.html#FIELD">FIELD</a></li><li><a href="global.html#FOOD">FOOD</a></li><li><a href="global.html#getIndexNumber">getIndexNumber</a></li><li><a href="global.html#init()-%253Evoid">init() -> void</a></li><li><a href="global.html#isValidMove-%253EBoolean">isValidMove -> Boolean</a></li><li><a href="global.html#MOVE">MOVE</a></li><li><a href="global.html#move(direction)-%253Evoid">move(direction) -> void</a></li><li><a href="global.html#moveSegment-%253Evoid">moveSegment -> void</a></li><li><a href="global.html#newHead">newHead</a></li><li><a href="global.html#newX">newX</a></li><li><a href="global.html#newY">newY</a></li><li><a href="global.html#R">R</a></li><li><a href="global.html#resetCanvas-%253Evoid">resetCanvas -> void</a></li><li><a href="global.html#setupCanvas-%253Evoid">setupCanvas -> void</a></li><li><a href="global.html#SIDELENGTH">SIDELENGTH</a></li><li><a href="global.html#SNAKE">SNAKE</a></li><li><a href="global.html#stop()-%253Evoid">stop() -> void</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Mar 18 2019 19:08:26 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Mar 28 2019 18:59:06 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

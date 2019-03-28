@@ -1,5 +1,5 @@
  /***************************************************************************
- **     functies voor het creeeren van de elementen van food      **
+ **     functies voor het creeeren van de elementen van food               **
  ***************************************************************************/
 
 /**
@@ -10,5 +10,5 @@
   @return: {Element} met straal R en color FOOD.COLOR
 */
 function createFood(x, y) {
-	return new Element(R, x, y, FOOD.COLOR);
+    return new Element(R, x, y, FOOD.COLOR);
 }

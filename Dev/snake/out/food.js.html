@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: snakeutil.js</title>
+    <title>JSDoc: Source: food.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: snakeutil.js</h1>
+    <h1 class="page-title">Source: food.js</h1>
 
     
 
@@ -26,26 +26,20 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>
- /***************************************************************************
- **                 Hulpfuncties                                           **
+            <pre class="prettyprint source linenums"><code> /***************************************************************************
+ **     functies voor het creeeren van de elementen van food               **
  ***************************************************************************/
- 
 
 /**
-  @function getRandomInt(min: number, max: number) -> number
-  @desc Creeren van random geheel getal in het interval [min, max] 
-  @param {number} min - een geheel getal als onderste grenswaarde
-  @param {number} max - een geheel getal als bovenste grenswaarde (max > min)
-  @return {number} een random geheel getal x waarvoor geldt: min &lt;= x &lt;= max
+  @function createFood(x,y) -> Element
+  @desc Voedselelement creeren op een bepaalde plaats
+  @param {number} x - x-coordinaat middelpunt
+  @param {number} y - y-coordinaart middelpunt
+  @return: {Element} met straal R en color FOOD.COLOR
 */
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-
-
-</code></pre>
+function createFood(x, y) {
+    return new Element(R, x, y, FOOD.COLOR);
+}</code></pre>
         </article>
     </section>
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: snakeutil.js</title>
+    <title>JSDoc: Source: segment.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: snakeutil.js</h1>
+    <h1 class="page-title">Source: segment.js</h1>
 
     
 
@@ -26,26 +26,68 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>
- /***************************************************************************
- **                 Hulpfuncties                                           **
- ***************************************************************************/
- 
+            <pre class="prettyprint source linenums"><code>/***************************************************************************
+**                 Hulpfuncties                                           **
+***************************************************************************/
 
 /**
-  @function getRandomInt(min: number, max: number) -> number
-  @desc Creeren van random geheel getal in het interval [min, max] 
-  @param {number} min - een geheel getal als onderste grenswaarde
-  @param {number} max - een geheel getal als bovenste grenswaarde (max > min)
-  @return {number} een random geheel getal x waarvoor geldt: min &lt;= x &lt;= max
+   @function newX
+   @desc berekent de nieuwe x waarde van een segment na een horizontale beweging
+   @param {Number} x - waarde
+   @param {Move} direction - waarde
+   @returns {Number} x waarde
 */
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+function newX(x, direction) {
+    if (direction === MOVE.LEFT) {
+        return x - MOVE.STEP;
+    }
+    else if (direction === MOVE.RIGHT) {
+        return x + MOVE.STEP;
+    }
+    return x;
 }
 
+/**
+  @function newY
+  @desc berekent de nieuwe y waarde van een segement na een verticale beweging
+  @param {Number} y - waarde
+  @param {Move} direction - waarde
+  @returns {Number} y waarde
+*/
+function newY(y, direction) {
+    if (direction === MOVE.DOWN) {
+        return y + MOVE.STEP;
+    } else if (direction === MOVE.UP) {
+        return y - MOVE.STEP;
+    }
+    return y;
+}
 
+ /***************************************************************************
+ **     functies voor het creeeren van de segmenten van de slang     **
+ ***************************************************************************/
 
-</code></pre>
+/**
+  @function createSegment(x,y) -> Element
+  @desc Slangsegment creeren op een bepaalde plaats
+  @param {number} x - x-coordinaat middelpunt
+  @param {number} y - y-coordinaart middelpunt
+  @return: {Element} met straal R en color SNAKE.COLORS.ELEMENT
+*/
+function createSegment(x, y) {
+    return new Element(R, x, y, SNAKE.COLORS.ELEMENT);
+}
+
+/**
+  @function createHead(x,y) -> Element
+  @desc Slangsegment creeren op een bepaalde plaats
+  @param {number} x - x-coordinaat middelpunt
+  @param {number} y - y-coordinaart middelpunt
+  @return: {Element} met straal R en color SNAKE.COLORS.HEAD
+*/
+function createHead(x, y) {
+    return new Element(R, x, y, SNAKE.COLORS.HEAD);
+}</code></pre>
         </article>
     </section>
 
