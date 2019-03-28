@@ -357,31 +357,62 @@ describe("Tests voor snake.js", function () {
         
         snake5 = new Snake(segments);
      
-        createFoods();
-        //nexthead = newHead(this.getHead(), MOVE.RIGHT);
+        //createFoods();
+        //in this test we assume there is no food so there will be no collisions.
         snake5.doMove(MOVE.RIGHT);
+
+        it("Check if the move is as expected and that the segments have moved to the right locations, with the right colors", function () {
+        assert.deepEqual(segmentsFinish, snake5.segments, "The segments of the snake have not moved to the expected position or the colors are different" )
+        }); 
+        it("we test the expected length assuming no food", function () {
+        assert.strictEqual(snake5.segments.length, 2, "The length of the food is not as expected" )
+        }); 
+        
+        snake6 = [];
+        foods = [];
+            
+        //Definieer kop voor de verplaatsing
+        var headsegmentStart = createSegment(190,170);
+        headsegmentStart.color = SNAKE.COLORS.HEAD;  
+        // Defineer tail voor de verplaatsing
+        var tailsegmentStart = createSegment(190,150);
+        //Definieer het segment van de kop na de verplaatsing 
+        var headsegmentFinish = createSegment(210,170); 
+        headsegmentFinish.color = SNAKE.COLORS.HEAD;
+        var midsegmentFinish = createSegment(190,170)
+        midsegmentFinish.color = SNAKE.COLORS.ELEMENT;
+        //Definieer het segment van de tail na de verplaatsing 
+        var tailsegmentFinish = createSegment(190,150);
+        tailsegmentFinish.color = SNAKE.COLORS.ELEMENT;
+        var foodsegment = createSegment()    
+        var segments2 = []
+        var segmentsFinish2 = []
+        segments2.push(tailsegmentStart);
+        segments2.push(headsegmentStart);
+        foods.push(foodsegment);
+        segmentsFinish2.push(tailsegmentFinish);
+        segmentsFinish2.push(midsegmentFinish);
+        segmentsFinish2.push(headsegmentFinish);
+            
+        snake6 = new Snake(segments);
+        snake6.canMove(MOVE.RIGHT);
+
+        console.log (snake6.segments[0].x )
+        console.log (snake6.segments[0].y )
+        console.log (segmentsFinish2[0].x)
+        console.log (segmentsFinish2[0].y)
+        it("Check if the move is as expected and that the segments have moved to the right locations, with the right colors", function () {
+        assert.deepEqual(segmentsFinish2, snake6.segments, "The segments of the snake have not moved to the expected position or the colors are different" )
+        }); 
+        it("we test the expected length assuming food", function () {
+        assert.strictEqual(snake6.segments.length, 3, "The length of the food is not as expected" )
+        }); 
+
    // if (nexthead.collidesWithOneOf(foods)) {
      //   foods.splice(nexthead.getIndexNumber(foods), 1);
     //} else {        
      //   this.segments.shift();
    // }
-         console.log (snake5.segments[0].x + "0 x")
-        console.log (snake5.segments[1].x + "1 x")
-        console.log (snake5.segments[0].y + "0 y")
-        console.log (snake5.segments[1].y + "1 y")
-       
-        
-       
-
-        console.log (segmentsFinish[0].x)
-        console.log (segmentsFinish[1].x)
-        console.log (segmentsFinish[0].y)
-        console.log (segmentsFinish[1].y)
-        
-        it("Check if the move is as expected", function () {
-        assert.deepEqual(segmentsFinish, snake5.segments, "The head of the snake has not moved to the expected position" )
-        });    
-
   //      it("Check if segments have shifted", function () {
     //        assert.deepEqual(snake.segments[0], tailsegment, "The head of the snake has not moved to the expected position" )
      //       });  
