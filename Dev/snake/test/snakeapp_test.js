@@ -283,50 +283,94 @@ describe("Tests voor snake.js", function () {
     
     //bij deze test creeren we een nieuwe snake met een positie dicht bij de rand van het canvas om de 
     //functie canMove te testen. 
-    //de getHead() functie in snake.js refereert nog steeds naar de originele snake gecreeerd via createStartSnake()
-    //heb ik het vermoeden. Na het aanroepen van de test canMove pakt de getHead het hoofd van de originele snake.
-    //hoewel ik een nieuw snake object heb gecreerd, dit begrijp ik niet.
     describe("Functie snake.protype.canMove", function () {
+      
+        //per test wordt er een nieuwe slang aangemaakt met nieuwe posities dicht bij de grenzen van het canvas
         snake1 = [];
-        foods = [];
-        var headsegment = createSegment(345,80);    
-        headsegment.color = SNAKE.COLORS.HEAD;  
+        snake2 = [];
+        snake3 = [];
+        snake4 = [];
+
+        var headsegment1 = createSegment(345,190);    
+        var headsegment2 = createSegment(5,190);
+        var headsegment3 = createSegment(190,5);
+        var headsegment4 = createSegment(190,355);
+      
         // Defineer tail
-        var tailsegment = createSegment(345,60);    
-        var segments = [];
-        segments.push(tailsegment);
-        segments.push(headsegment);             // Kop van de slang is het laatste element.
-        snake1 = new Snake(segments);
-        console.log(snake1.segments[0].x + "x van snake segment 0 en segment 1 zijn beide 345 in de canmove test" + snake.segments[1].x)
-        console.log (snake1.segments.length +"lengte van de snake array in canMove is ook 2")
-        console.log ("hoe kan het dat snake.canMove nog verwijst naar de snake array met de nieuwe posities?")
-        console.log ("terwijl in de functie canMove, this.getHead een andere snake pakt met x 190?")
-        it("Check if the move can is valid", function () {
+        var tailsegment1 = createSegment(345,60);  
+        var tailsegment2 = createSegment(5, 60);  
+        var tailsegment3 = createSegment(190, 25);  
+        var tailsegment4 = createSegment(190, 335);  
+
+        var segments1 = [];
+        var segments2 = [];
+        var segments3 = [];
+        var segments4 = [];
+
+        segments1.push(tailsegment1);
+        segments1.push(headsegment1);             // Kop van de slang is het laatste element.
+        segments2.push(tailsegment2);
+        segments2.push(headsegment2);
+        segments3.push(tailsegment3);
+        segments3.push(headsegment3);             // Kop van de slang is het laatste element.
+        segments4.push(tailsegment4);
+        segments4.push(headsegment4);
+
+        snake1 = new Snake(segments1);
+        snake2 = new Snake(segments2);
+        snake3 = new Snake(segments3);
+        snake4 = new Snake(segments4);
+
+        it("Check if de move is valid", function () {
         assert.isFalse(snake1.canMove(MOVE.RIGHT), "MOVE.RIGHT at x = 345 is invalid" )
+        assert.isFalse(snake2.canMove(MOVE.LEFT),  "MOVE.LEFT at x 5 is invalid")
+        assert.isFalse(snake3.canMove(MOVE.UP),    "MOVE.UP at y = 5 is invalid" )
+        assert.isFalse(snake4.canMove(MOVE.DOWN),  "MOVE.DOWN at y 355 is invalid")
         });
     })
     
 
     describe("Functie snake.protype.doMove", function () {
-        var headsegment = createSegment(210,170);  
-        var tailsegment = createSegment(210,150);
+        
+        snake5 = [];
         foods = [];
-        createStartSnake();
+        
+        //Definieer kop voor de verplaatsing
+        var headsegmentStart = createSegment(190,170);
+        headsegmentStart.color = SNAKE.COLORS.HEAD;  
+        // Defineer tail voor de verplaatsing
+        var tailsegmentStart = createSegment(190,150);
+        //Definieer het segment van de kop na de verplaatsing 
+        var headsegmentFinish = createSegment(210,170); 
+        //Definieer het segment van de tail na de verplaatsing 
+        var tailsegmentFinish = createSegment(210,150);
+        
+        
+        var segments = []
+        var segmentsFinish = []
+        segments.push(tailsegmentStart);
+        segments.push(headsegmentStart);
+
+        segmentsFinish.push(tailsegmentFinish);
+        segmentsFinish.push(headsegmentFinish);
+        
+        snake5 = new Snake(segments);
+     
         createFoods();
-        nexthead = newHead(this.getHead(), MOVE.RIGHT);
-    
-    if (nexthead.collidesWithOneOf(foods)) {
-        foods.splice(nexthead.getIndexNumber(foods), 1);
-    } else {        
-        this.segments.shift();
-    }
+        //nexthead = newHead(this.getHead(), MOVE.RIGHT);
+        snake5.doMove(MOVE.RIGHT);
+   // if (nexthead.collidesWithOneOf(foods)) {
+     //   foods.splice(nexthead.getIndexNumber(foods), 1);
+    //} else {        
+     //   this.segments.shift();
+   // }
         it("Check if the move is as expected", function () {
-        assert.deepEqual(nextHead, headsegment, "The head of the snake has not moved to the expected position" )
+        assert.deepEqual(segmentsFinish, snake5.segments, "The head of the snake has not moved to the expected position" )
         });    
 
-        it("Check if segments have shifted", function () {
-            assert.deepEqual(snake.segments[0], tailsegment, "The head of the snake has not moved to the expected position" )
-            });  
+  //      it("Check if segments have shifted", function () {
+    //        assert.deepEqual(snake.segments[0], tailsegment, "The head of the snake has not moved to the expected position" )
+     //       });  
     })
     //1 verplaatsen binnen speelveld
     //

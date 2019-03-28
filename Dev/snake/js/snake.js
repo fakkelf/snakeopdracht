@@ -37,7 +37,6 @@ function newHead(head, direction) {
 Snake.prototype.getHead = function() {
     // Controle op de aanwezigheid van de kop, we verwachten dat deze altijd aanwezig is.
     // Indien niet aanwezig, gooi een fout.
-    console.log (this.segments[0].x)
     if (this.segments.length < 2) {
         throw new Error("Slang bestaat niet");
     }
