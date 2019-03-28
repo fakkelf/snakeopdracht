@@ -53,8 +53,6 @@ Snake.prototype.getHead = function() {
 */
 Snake.prototype.canMove = function(direction) {
     head = this.getHead();
-    console.log (head.x + "x is 190 ipv 345 enig idee waar dit misgaat? this lijkt naar een ander snake Object te wijzen")
-    console.log (snake.segments.length +"lengte is 2, wat bevestigt dat this naar een ander snake Object wijst dan ik in de test canMove gecreeerd")
     return isValidMove(newX(head.x, direction), newY(head.y, direction,));
 }
 

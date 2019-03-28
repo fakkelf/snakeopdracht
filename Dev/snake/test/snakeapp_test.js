@@ -287,7 +287,7 @@ describe("Tests voor snake.js", function () {
     //heb ik het vermoeden. Na het aanroepen van de test canMove pakt de getHead het hoofd van de originele snake.
     //hoewel ik een nieuw snake object heb gecreerd, dit begrijp ik niet.
     describe("Functie snake.protype.canMove", function () {
-       
+        snake1 = [];
         foods = [];
         var headsegment = createSegment(345,80);    
         headsegment.color = SNAKE.COLORS.HEAD;  
@@ -296,13 +296,13 @@ describe("Tests voor snake.js", function () {
         var segments = [];
         segments.push(tailsegment);
         segments.push(headsegment);             // Kop van de slang is het laatste element.
-        snake = new Snake(segments);
-        console.log(snake.segments[0].x + "x van snake segment 0 en segment 1 zijn beide 345 in de canmove test" + snake.segments[1].x)
-        console.log (snake.segments.length +"lengte van de snake array in canMove is ook 2")
+        snake1 = new Snake(segments);
+        console.log(snake1.segments[0].x + "x van snake segment 0 en segment 1 zijn beide 345 in de canmove test" + snake.segments[1].x)
+        console.log (snake1.segments.length +"lengte van de snake array in canMove is ook 2")
         console.log ("hoe kan het dat snake.canMove nog verwijst naar de snake array met de nieuwe posities?")
         console.log ("terwijl in de functie canMove, this.getHead een andere snake pakt met x 190?")
         it("Check if the move can is valid", function () {
-        assert.isFalse(snake.canMove(MOVE.RIGHT), "MOVE.RIGHT at x = 345 is invalid" )
+        assert.isFalse(snake1.canMove(MOVE.RIGHT), "MOVE.RIGHT at x = 345 is invalid" )
         });
     })
     
