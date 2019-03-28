@@ -342,9 +342,10 @@ describe("Tests voor snake.js", function () {
         var tailsegmentStart = createSegment(190,150);
         //Definieer het segment van de kop na de verplaatsing 
         var headsegmentFinish = createSegment(210,170); 
+        headsegmentFinish.color = SNAKE.COLORS.HEAD;
         //Definieer het segment van de tail na de verplaatsing 
-        var tailsegmentFinish = createSegment(210,150);
-        
+        var tailsegmentFinish = createSegment(190,170);
+        tailsegmentFinish.color = SNAKE.COLORS.ELEMENT;
         
         var segments = []
         var segmentsFinish = []
@@ -364,6 +365,19 @@ describe("Tests voor snake.js", function () {
     //} else {        
      //   this.segments.shift();
    // }
+         console.log (snake5.segments[0].x + "0 x")
+        console.log (snake5.segments[1].x + "1 x")
+        console.log (snake5.segments[0].y + "0 y")
+        console.log (snake5.segments[1].y + "1 y")
+       
+        
+       
+
+        console.log (segmentsFinish[0].x)
+        console.log (segmentsFinish[1].x)
+        console.log (segmentsFinish[0].y)
+        console.log (segmentsFinish[1].y)
+        
         it("Check if the move is as expected", function () {
         assert.deepEqual(segmentsFinish, snake5.segments, "The head of the snake has not moved to the expected position" )
         });    
