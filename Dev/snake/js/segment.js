@@ -14,7 +14,7 @@ function newX(x, direction) {
         return x - MOVE.STEP;
     }
     else if (direction === MOVE.RIGHT) {
-      return x + MOVE.STEP;
+        return x + MOVE.STEP;
     }
     return x;
 }
@@ -36,7 +36,7 @@ function newY(y, direction) {
 }
 
  /***************************************************************************
- **     functies voor het creeeren van de segmenten van de slang     **
+ **     functies voor het creeeren van de segmenten van de slang           **
  ***************************************************************************/
 
 /**

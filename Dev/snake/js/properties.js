@@ -59,27 +59,41 @@ const FIELD_TEMPLATE = {
     @property {number} STEP - Stap grootte (2 * R).
     @property {string} LEFT - Beweeg een stap naar links.
     @property {string} RIGHT - Beweeg een stap naar rechts.
-    @property {string} UP   - Beweeg een stap naar boven.
+    @property {string} UP - Beweeg een stap naar boven.
     @property {string} DOWN - Beweeg een stap naar onder.
 */
 const MOVE = Object.freeze(MOVE_TEMPLATE);
+
  /**
     @constant
+    @desc Defineert een snake
     @type SNAKE
-
+    @property {object} COLORS - Kleuren van de snake.
+    @property {string} HEAD - Kleur van de kop.
+    @property {string} ELEMENT - Kleur van de lichaams segmenten.
+    @property {number} SIZE - Start aantal lichaams segmenten.
 */
 const SNAKE = Object.freeze(SNAKE_TEMPLATE);
+
  /**
     @constant
+    @desc Defineert een voedsel element
     @type FOOD
+    @property {string} COLOR - Kleur van een voedsel element.
+    @property {number} SIZE - Maximaal aantal voedsel elementen.
 */
 const FOOD = Object.freeze(FOOD_TEMPLATE);
+
  /**
     @constant
+    @desc Defieert veld constanten.
     @type FIELD
-    @property {string} COLOR    - Kleur van een voedsel element.
-    @property {number} NUMBER   - Aantal voedsel elementen op het veld.
+    @property {number} WIDTH - Breedte van het veld.
+    @property {number} HEIGHT - Hoogte van het veld, waarbij HEIGHT = WIDTH.
+    @property {number} MAX - Netto breedte van het veld.
+    @property {number} XMIN - Minimale x waarde.
+    @property {number} YMIN - Minimale y waarde.
+    @property {number} XMAX - Maximale x waarde.
+    @property {number} YMAX - Maximale y waarde.
 */
 const FIELD = Object.freeze(FIELD_TEMPLATE);
-
-

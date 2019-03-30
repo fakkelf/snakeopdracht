@@ -38,7 +38,6 @@ function isValidMove(x, y) {
         in het midden van het veld
   @return: slang volgens specificaties
 */
-
 function createStartSnake() {
     // Defineer head
     var headsegment = createSegment(R + FIELD.WIDTH/2, FIELD.WIDTH/2 - R);
@@ -57,7 +56,6 @@ function createStartSnake() {
         in het midden van het veld
   @return: slang volgens specificaties
 */
-
 function createStartSnake_Alt() {
     // Alternatieve implementatie waarbij de kleur van het segment vooraf wordt bepaald.
     // Defineer kop van de slang
@@ -77,7 +75,7 @@ function createStartSnake_Alt() {
 */
 function createFoods() {
     var  i,
-	food,
+    food,
     i = 0;
     //we gebruiken een while omdat we, om een arraymethode te gebruiken, eerst een nieuw array zouden moeten creëren (met NUMFOODS elementen)
     while (i < FOOD.NUMBER ) {

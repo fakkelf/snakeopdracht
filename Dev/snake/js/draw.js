@@ -10,11 +10,11 @@
 */
 function drawElement(element, canvas) {
     canvas.drawArc({
-        draggable : false,
-        fillStyle : element.color,
-        x : element.x,
-        y : element.y,
-        radius : element.radius
+        draggable: false,
+        fillStyle: element.color,
+        x: element.x,
+        y: element.y,
+        radius: element.radius
     });
 }
 

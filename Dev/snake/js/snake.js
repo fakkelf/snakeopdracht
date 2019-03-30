@@ -67,8 +67,8 @@ Snake.prototype.doMove = function (direction) {
     if (nexthead.collidesWithOneOf(foods)) {
         foods.splice(nexthead.getIndexNumber(foods), 1);
     } else {
-		//Geen collision betekent dat het eerste segment verwijdert wordt hierdoor is de lengte van de slang tijdelijk 1
-		//Totdat later de nieuwe kop segment van de slang wordt toegevoegd
+        //Geen collision betekent dat het eerste segment verwijdert wordt hierdoor is de lengte van de slang tijdelijk 1
+        //Totdat later de nieuwe kop segment van de slang wordt toegevoegd
         this.segments.shift();
     }
 

@@ -1,52 +1,23 @@
-De verdeling van de functionaliteit bestaat uit de volgende onderdelen:
-Volgende functies.
-canvasutil.js bestaat uit de volgende functies:
-moveSegment(segment , direction)
-isValidMove(x,y)
-createStartSnake()
-createStartSnake_Alt()
-createFoods()
-setupCanvas()
+Generiek structuur
+css				bevat algemene css bestanden voor de gehele site
+js				bevat generieke javascript (chai, mocha, jsdoc)
+snake			bevat alle bestanden specifiek voor de werking van het snake spelletje
 
+Snake structuur
+css				bevat snake specifieke css
+js				bevat snake specifieke javascript
+out				bevat de documentatie gegenereed door jsdoc
+test			bevat de test suite voor het snake spelletje			
 
-draw.js:
-drawElement()
-draw()
+Voor de verdeling van de functionaliteiten over de verschillende bestanden
+hebben we als uitgangspunt genomen om tot zo klein mogelijke autonome onderdelen te komen.
 
-element.js:
-Element.prototype.getIndexNumber(elems)
-Element.prototype.collidesWithOneOf(elems)
-Element(radius, x, y, color)     constructor 
-
-food.js:
-createFood(x,y)
-
-properties.js:
-Alle global variabelen
-
-segment.js:
-newY(y, direction)
-newX(x, direction)
-createSegment(x, y)
-createHead(x, y)
-
-snake.js:
-newHead(head, direction)
-prototype.getHead()
-prototype.canMove()
-prototype.doMove()
-move(direction)
-Snake(segments)     constructor
-
-snakeapp.js:
-init()
-stop()
-move(direction)
-
-snakeutil.js:
-getRandomInt(min, max)
-
-
-In de directory /dev/snake/test/snakeapp_test.js test, staat aan all Mochai tests.
-
-
+snakeapp		Voor het starten en controleren van het snake spelletje.
+canvasutil		Voor het opbouwen en manipuleren van het canvas.
+element			Basaal object voor het aanmaken van voedsel en segment objecten.
+segment			Voor het opbouwen van de segmenten van de snake
+snake			Voor het manipuleren van de snake over het canvas
+snakeutil		Algemene functies voor ondersteuning snake
+food			Voor het opbouwen van de voedsel elementen
+draw			Voor het tekenen van de snake en voedsel objecten op het canvas
+properties		Container voor de constanten.
