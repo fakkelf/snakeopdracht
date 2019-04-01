@@ -263,7 +263,7 @@ describe("Tests voor canvasutil.js", function () {
  **                 Snake                                                  **
  ***************************************************************************/
 describe("Tests voor snake.js", function () {
-
+   
     describe("Functie newHead", function() {
         const startHead = createHead(80, 80);
         const nextHead = createHead(60, 80);
@@ -272,7 +272,28 @@ describe("Tests voor snake.js", function () {
           assert.deepEqual(newHead(startHead, MOVE.LEFT), nextHead, "New headObject has unexpected values");
          });
     });
-
+	
+    describe("Functie newHead", function() {
+		  var headnew = createSegment(180, 180);     // kop overlapt niet met lichaam van de slang
+		  var headnew2 = createSegment (200,220);   //kop overlapt met lichaam van de slang
+		  var bodysnake = []
+		  bodysegment1 = createSegment (180,200);
+		  bodysnake.push(bodysegment1);
+		  bodysegment2 = createSegment (180,220);
+		  bodysnake.push(bodysegment2);
+		  bodysegment3 = createSegment (200,220);
+		  bodysnake.push(bodysegment3);
+		  bodysegment4 = createSegment (200,200);
+		  bodysnake.push(bodysegment4);
+		
+	    it("Controleer of de kop van de slang met het lichaam botst", function () {
+          assert.isFalse(headnew.collidesWithOneOf(bodysnake), "A value of false should be returned");
+        });
+        it("Controleer of de kop van de slang met het lichaam botst", function () {
+          assert.isTrue(headnew2.collidesWithOneOf(bodysnake), "A value of true hould be returned");
+        });
+    });
+	
     describe("Functie snake.protype.getHead", function () {
         createStartSnake();
 

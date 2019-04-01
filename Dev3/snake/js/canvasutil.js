@@ -21,7 +21,17 @@ function moveSegment(segment , direction) {
  *                    true wanneer de Move binnen het canvas is.
  */
 function isValidMove(x, y) {
-    if (x >= 0 && x <= $("#mySnakeCanvas").width() && y >= 0 && y <= $("#mySnakeCanvas").height()) {
+    var xMaxCanvasDom = (parseInt(Math.floor(jQuery("#mySnakeCanvas").innerWidth())))- R
+	if (349 < xMaxCanvasDom) {
+		console.log ("Yes it is");
+	}
+	if (350 <= xMaxCanvasDom) {
+	console.log ("it is equeal")}
+	
+	console.log (xMaxCanvasDom);
+	yMaxCanvasDom = Math.floor(jQuery("#mySnakeCanvas").innerHeight());
+	
+    if (x >= R && x <= xMaxCanvasDom && y >= R && y <= 350) {
         return true;
     } else {
         return false;
