@@ -1,6 +1,7 @@
 jQuery(document).keydown(function (e) {
   switch(e.which) {
   case 37: // left
+    console.log ("left");
     direction = MOVE.LEFT;
 	break;
   case 38: // up
