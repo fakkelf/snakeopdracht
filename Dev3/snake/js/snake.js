@@ -106,7 +106,7 @@ function move(direction) {
         draw();
     } else {
         console.log("snake cannot move " + direction);
-    }
+    };
 }
 
 

@@ -1,16 +1,16 @@
 jQuery(document).keydown(function (e) {
     switch (e.which) {
        case 37: // left
-		 direction = "LEFT";
+		 direction = MOVE.LEFT;
 		 break;
 	   case 38: // up
-		  direction = "UP";
+		  direction = MOVE.UP;
 		  break;
 	   case 39: // right
-		  direction = "RIGHT";
+		  direction = MOVE.RIGHT;
 		  break;
 	   case 40: // down
-		  direction = "DOWN";
+		  direction = MOVE.DOWN;
 		  break;
     };
 });

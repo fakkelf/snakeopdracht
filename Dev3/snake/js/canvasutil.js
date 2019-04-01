@@ -21,7 +21,7 @@ function moveSegment(segment , direction) {
  *                    true wanneer de Move binnen het canvas is.
  */
 function isValidMove(x, y) {
-    if (x >= FIELD.XMIN && x <= FIELD.XMAX && y >= FIELD.YMIN && y <= FIELD.YMAX) {
+    if (x >= 0 && x <= $("#mySnakeCanvas").width() && y >= 0 && y <= $("#mySnakeCanvas").height()) {
         return true;
     } else {
         return false;
