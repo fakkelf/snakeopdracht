@@ -17,9 +17,10 @@
 function newHead(head, direction) {
     headnew = createSegment(head.x, head.y);
 	bodysnake = this.snake.segments.slice(0,(this.snake.segments.length -1));  // take the array without the head
-    if (headnew.collidesWithOneOf(bodysnake)) {
+    //als de kop van de slang met de body van de slang botst dan is het spel verloren
+	if (headnew.collidesWithOneOf(bodysnake)) {
         console.log ("verloren!!!");
-        stop();
+        stop();                       //stop het spel!
     } else {
 	
     moveSegment(headnew, direction);
@@ -71,24 +72,22 @@ Snake.prototype.doMove = function (direction) {
     nexthead = newHead(this.getHead(), direction);
     //Als er een collision is met voedsel dan groeit de slang en wordt het voedsel weggehaald
     if (typeof nexthead !== 'undefined' && nexthead.collidesWithOneOf(foods)) {
+		//Als er nog voedsel is dan verwijderen we dit voedsel uit de foods array
 		if (foods.length !== 0){
 		    foods.splice(nexthead.getIndexNumber(foods), 1);
+			//Als er geen voedsel meer is heeft de speler gewonnen
 		    if (foods.length === 0){
             console.log("gewonnen!");
-		    stop()
+		    stop()                 //stop het spel
 			};
         };
-		
-		
     } else {
         //Geen collision betekent dat het eerste segment verwijdert wordt hierdoor is de lengte van de slang tijdelijk 1
         //Totdat later de nieuwe kop segment van de slang wordt toegevoegd
         this.segments.shift();
     }
-    if (foods.length !== 0) {
     this.getHead().color = SNAKE.COLORS.ELEMENT; // de oude kop verandert van kleur
     this.segments.push(nexthead);   // nieuwe kop van slang wordt toegevoegd
-	};
 };
 
  /***************************************************************************

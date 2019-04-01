@@ -1,3 +1,8 @@
+ /***************************************************************************
+ **                 Aansturing functies                                    **
+ ***************************************************************************/
+
+//met deze jQuery sturen we de slang aan
 jQuery(document).keydown(function (e) {
   switch(e.which) {
   case 37: // left
