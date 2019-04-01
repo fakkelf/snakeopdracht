@@ -6,6 +6,8 @@ var snake,
 
 var direction = MOVE.UP;                                 // richting van de slang
 
+
+
 $(document).ready(function () {
     $("#startSnake").click(init);
     $("#stopSnake").click(stop);
@@ -24,8 +26,10 @@ function init() {
 
     setupCanvas();
 	snakeTimer = setInterval (function() {
-       move (direction);
-    }, SLEEPTIME);
+    if (foods.length !==0) {
+        move (direction);
+    }
+}, SLEEPTIME);
 }
 
 /**
@@ -33,11 +37,12 @@ function init() {
   @desc Laat slang en voedsel verdwijnen, en teken leeg veld
 */
 function stop() {
-	clearInterval(snakeTimer());
+	clearInterval(snakeTimer);
     snake = [];
     foods = [];
 
     resetCanvas();
+	
 }
 
 
@@ -50,8 +55,13 @@ function stop() {
 function move(direction) {
     if (snake.canMove(direction)) {
         snake.doMove(direction);
+        if (foods.length !== 0) {
         draw();
+		}
     } else {
         console.log("snake cannot move " + direction);
+		stop()
     }
 }
+
+

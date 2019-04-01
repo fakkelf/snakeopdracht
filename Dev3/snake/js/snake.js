@@ -16,12 +16,18 @@
  */
 function newHead(head, direction) {
     headnew = createSegment(head.x, head.y);
-
+	bodysnake = this.snake.segments.slice(0,(this.snake.segments.length -1));  // take the array without the head
+    if (headnew.collidesWithOneOf(bodysnake)) {
+        console.log ("verloren!!!");
+        stop();
+    } else {
+	
     moveSegment(headnew, direction);
 
     headnew.color = SNAKE.COLORS.HEAD;
-
+  
     return headnew;
+	}
 }
 
  /***************************************************************************
@@ -64,16 +70,25 @@ Snake.prototype.doMove = function (direction) {
 
     nexthead = newHead(this.getHead(), direction);
     //Als er een collision is met voedsel dan groeit de slang en wordt het voedsel weggehaald
-    if (nexthead.collidesWithOneOf(foods)) {
-        foods.splice(nexthead.getIndexNumber(foods), 1);
+    if (typeof nexthead !== 'undefined' && nexthead.collidesWithOneOf(foods)) {
+		if (foods.length !== 0){
+		    foods.splice(nexthead.getIndexNumber(foods), 1);
+		    if (foods.length === 0){
+            console.log("gewonnen!");
+		    stop()
+			};
+        };
+		
+		
     } else {
         //Geen collision betekent dat het eerste segment verwijdert wordt hierdoor is de lengte van de slang tijdelijk 1
         //Totdat later de nieuwe kop segment van de slang wordt toegevoegd
         this.segments.shift();
     }
-
+    if (foods.length !== 0) {
     this.getHead().color = SNAKE.COLORS.ELEMENT; // de oude kop verandert van kleur
     this.segments.push(nexthead);   // nieuwe kop van slang wordt toegevoegd
+	};
 };
 
  /***************************************************************************
@@ -94,6 +109,7 @@ function move(direction) {
         console.log("snake cannot move " + direction);
     }
 }
+
 
 
 /***************************************************************************

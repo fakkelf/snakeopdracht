@@ -44,7 +44,7 @@ const SNAKE_TEMPLATE = {
 
 const FOOD_TEMPLATE = {
     COLOR: "Olive",                                 // kleur van voedsel
-    NUMBER: 15                                      // Aantal voedsel elementen
+    NUMBER: 5                                       // Aantal voedsel elementen
 };
 
 const FIELD_TEMPLATE = {
