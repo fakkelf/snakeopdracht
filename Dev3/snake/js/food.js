@@ -10,5 +10,5 @@
   @return: {Element} met straal R en color FOOD.COLOR
 */
 function createFood(x, y) {
-    return new Element(R, x, y, FOOD.COLOR);
+    return new Element(properties.getRadius(), x, y, properties.getFood().COLOR);
 }

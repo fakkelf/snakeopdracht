@@ -10,11 +10,11 @@
    @returns {Number} x waarde
 */
 function newX(x, direction) {
-    if (direction === MOVE.LEFT) {
-        return x - MOVE.STEP;
+    if (direction === properties.getMove().LEFT) {
+        return x - properties.getMove().STEP;
     }
-    else if (direction === MOVE.RIGHT) {
-        return x + MOVE.STEP;
+    else if (direction === properties.getMove().RIGHT) {
+        return x + properties.getMove().STEP;
     }
     return x;
 }
@@ -27,10 +27,10 @@ function newX(x, direction) {
   @returns {Number} y waarde
 */
 function newY(y, direction) {
-    if (direction === MOVE.DOWN) {
-        return y + MOVE.STEP;
-    } else if (direction === MOVE.UP) {
-        return y - MOVE.STEP;
+    if (direction === properties.getMove().DOWN) {
+        return y + properties.getMove().STEP;
+    } else if (direction === properties.getMove().UP) {
+        return y - properties.getMove().STEP;
     }
     return y;
 }
@@ -47,7 +47,7 @@ function newY(y, direction) {
   @return: {Element} met straal R en color SNAKE.COLORS.ELEMENT
 */
 function createSegment(x, y) {
-    return new Element(R, x, y, SNAKE.COLORS.ELEMENT);
+    return new Element(properties.getRadius(), x, y, properties.getSnake().COLORS.ELEMENT);
 }
 
 /**
@@ -58,5 +58,5 @@ function createSegment(x, y) {
   @return: {Element} met straal R en color SNAKE.COLORS.HEAD
 */
 function createHead(x, y) {
-    return new Element(R, x, y, SNAKE.COLORS.HEAD);
+    return new Element(properties.getRadius(), x, y, properties.getSnake().COLORS.HEAD);
 }

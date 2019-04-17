@@ -4,7 +4,7 @@
 var snake,
     foods = [];                                // voedsel voor de slang\\
 
-var direction = MOVE.UP;                       // richting van de slang begint omhoog
+var direction = properties.getMove().UP;                       // richting van de slang begint omhoog
 
 $(document).ready(function () {
     $("#startSnake").click(init);
@@ -25,10 +25,10 @@ function init() {
     setupCanvas();
 	
     snakeTimer = setInterval (function() {            //start het interval en daarmee de beweging van de slang
-    if (foods.length !==0) {
-        move (direction);
-    }
-}, SLEEPTIME);
+        if (foods.length !==0) {
+            move (direction);
+        }
+    }, properties.getSleepTime());
 }
 
 /**

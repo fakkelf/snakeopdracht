@@ -8,21 +8,38 @@
 
 ***************************************************************************/
 /**
+ * @function equalPos
+ * @desc Controleert of de posities van twee element aan elkaar gelijk zijn.
+ * De vergelijking gebeurt op basis van de x en y waarden van het element.
+ *
+ * @param {Element} elem
+ *
+ * @returns {boolean} True indien gelijk anders false.
+*/
+Element.prototype.equalPos = function (elem) {
+    var x = this.x;
+    var y = this.y;
+    return elem.x === x && elem.y === y;
+}
+
+/**
  * @function getIndexNumber
  * @desc Controleert of een element onderdeel is van een lijst (array) van Elementen.
- * De vergelijking gebeurt op basis van de x en y waarden van het element.
  *
  * @param {array} elems - Een lijst (array) van het objecttype Element.
  *
  * @returns {number} Indien onderdeel van lijst dan de positie in de lijst anders de waarde -1.
 */
 Element.prototype.getIndexNumber = function (elems) {
-    for (i = 0; i < elems.length; i++) {
-        if (elems[i].x === this.x && elems[i].y === this.y) {
-             return i;
+    var el1 = this;
+    var index = -1;
+    
+    elems.forEach(function(elem, i) {
+        if (elem.equalPos(el1)) {
+            index = i;
         }
-    }
-    return -1;
+    });
+    return index;
 };
 
 /**
@@ -39,10 +56,10 @@ Element.prototype.collidesWithOneOf = function (elems) {
         return false;
     }
     //controleer of de twee arrays van het type Element met elkaar colliden.
-    if (this.getIndexNumber(elems) > -1) {
-        return true;
-    }
-    return false;
+    var el1 = this;
+    return elems.some(function(elem){
+        return elem.equalPos(el1);
+    });
 };
 
 /***************************************************************************

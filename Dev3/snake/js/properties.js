@@ -1,65 +1,17 @@
-
  /***************************************************************************
- **                 Basale waarden                                         **
+ **                 Module properties                                      **
  ***************************************************************************/
 /**
     @constant
     @type {number}
     @desc Straal van een element
 */
-const R             = 10;                              // straal van een element
-/**
-    @constant
-    @type {number}
-    @desc Kant grootte van het veld
-*/
-const SIDELENGTH    = 360;                             // Kant grootte van het veld
-
 /**
     @constant
     @type {number}
     @desc Snelheid van de beweging van de snake in ms
 */
-const SLEEPTIME    = 500;                             // Kant grootte van het veld
-
-// ** Definieer Object templates
- /***************************************************************************
- **                 Object templates                                       **
- ***************************************************************************/
-const MOVE_TEMPLATE = {
-    STEP: 2 * R,                                    // stapgrootte
-    LEFT: "left",                                   // beweeg naar links
-    RIGHT: "right",                                 // beweeg naar rechts
-    UP: "up",                                       // beweeg naar boven
-    DOWN: "down"                                    // beweeg naar beneden
-};
-
-const SNAKE_TEMPLATE = {
-    COLORS: {
-        HEAD: "DarkOrange",                         // kleur van de kop van de slang
-        ELEMENT: "DarkRed"                          // kleur van een slangsegment
-    },
-    SIZE: 2                                         // Start grootte van de slang
-};
-
-const FOOD_TEMPLATE = {
-    COLOR: "Olive",                                 // kleur van voedsel
-    NUMBER: 5                                       // Aantal voedsel elementen
-};
-
-const FIELD_TEMPLATE = {
-    WIDTH: SIDELENGTH,
-    HEIGHT: SIDELENGTH,                             // hoogte veld, er moet gelden: WIDTH = HEIGHT
-    MAX: SIDELENGTH / MOVE_TEMPLATE.STEP - 1,       // netto veldbreedte
-    XMIN: R,                                        // minimale x waarde
-    YMIN: R,                                        // minimale y waarde
-    XMAX: SIDELENGTH - R,                           // maximale x waarde
-    YMAX: SIDELENGTH - R                            // maximale y waarde
-};
-
-// ** Defineer immutabele objecten.
-
- /**
+/**
     @constant
     @desc Mogelijkheden om te kunnen bewegen over het veld.
     @type MOVE
@@ -69,9 +21,7 @@ const FIELD_TEMPLATE = {
     @property {string} UP - Beweeg een stap naar boven.
     @property {string} DOWN - Beweeg een stap naar onder.
 */
-const MOVE = Object.freeze(MOVE_TEMPLATE);
-
- /**
+/**
     @constant
     @desc Defineert een snake
     @type SNAKE
@@ -80,18 +30,14 @@ const MOVE = Object.freeze(MOVE_TEMPLATE);
     @property {string} ELEMENT - Kleur van de lichaams segmenten.
     @property {number} SIZE - Start aantal lichaams segmenten.
 */
-const SNAKE = Object.freeze(SNAKE_TEMPLATE);
-
- /**
+/**
     @constant
     @desc Defineert een voedsel element
     @type FOOD
     @property {string} COLOR - Kleur van een voedsel element.
     @property {number} SIZE - Maximaal aantal voedsel elementen.
 */
-const FOOD = Object.freeze(FOOD_TEMPLATE);
-
- /**
+/**
     @constant
     @desc Defieert veld constanten.
     @type FIELD
@@ -103,4 +49,72 @@ const FOOD = Object.freeze(FOOD_TEMPLATE);
     @property {number} XMAX - Maximale x waarde.
     @property {number} YMAX - Maximale y waarde.
 */
-const FIELD = Object.freeze(FIELD_TEMPLATE);
+var properties = (function() {
+    const R             = 10;                           // straal van een element
+    const SLEEPTIME    = 500;                           // Pauze in ms
+    const MOVE = {
+        STEP: 2 * R,                                    // stapgrootte
+        LEFT: "left",                                   // beweeg naar links
+        RIGHT: "right",                                 // beweeg naar rechts
+        UP: "up",                                       // beweeg naar boven
+        DOWN: "down"                                    // beweeg naar beneden
+    };
+    const SNAKE = {
+        COLORS: {
+            HEAD: "DarkOrange",                         // kleur van de kop van de slang
+            ELEMENT: "DarkRed"                          // kleur van een slangsegment
+        },
+        SIZE: 2                                         // Start grootte van de slang
+    };
+    const FOOD = {
+        COLOR: "Olive",                                 // kleur van voedsel
+        NUMBER: 5                                       // Aantal voedsel elementen
+    };
+    var SIDELENGTH    = 100;                            // Bepaald dimensies van het veld, default waarde 20
+    const FIELD = {
+        WIDTH: SIDELENGTH,
+        HEIGHT: SIDELENGTH,                             // hoogte veld, er moet gelden: WIDTH = HEIGHT
+        MAX: SIDELENGTH / MOVE.STEP - 1,                // netto veldbreedte
+        XMIN: R,                                        // minimale x waarde
+        YMIN: R,                                        // minimale y waarde
+        XMAX: SIDELENGTH - R,                           // maximale x waarde
+        YMAX: SIDELENGTH - R                            // maximale y waarde
+    };
+    
+    return {
+        getRadius : function() {
+            return R;
+        },
+        getSleepTime : function() {
+            return SLEEPTIME;
+        },
+        getMove : function() {
+            return MOVE;
+        },
+        getSnake : function() {
+            return SNAKE;
+        },
+        getFood : function() {
+            return FOOD;
+        },
+        setField : function(sideLength) {
+            SIDELENGTH = sideLength;
+            FIELD.WIDTH = SIDELENGTH;            
+            FIELD.HEIGHT = SIDELENGTH;
+            FIELD.MAX = SIDELENGTH / MOVE.STEP - 1;
+            FIELD.XMIN = R;
+            FIELD.YMIN = R;
+            FIELD.XMAX = SIDELENGTH - R;
+            FIELD.YMAX = SIDELENGTH - R;
+        },   
+        getField : function() {
+            return FIELD;
+        }
+    };
+}());
+
+
+
+
+
+

@@ -48,12 +48,33 @@ function moveSegment(segment , direction) {
    @returns {Boolean} false wanneer de Move buiten het canvas valt,
  *                    true wanneer de Move binnen het canvas is.
  */
-function isValidMove(x, y) {
-    if (x >= FIELD.XMIN &amp;&amp; x &lt;= FIELD.XMAX &amp;&amp; y >= FIELD.YMIN &amp;&amp; y &lt;= FIELD.YMAX) {
+ function isValidMove(x, y) {
+  
+    return (x >= properties.getField().XMIN &amp;&amp; x &lt;= properties.getField().XMAX &amp;&amp; y >= properties.getField().YMIN &amp;&amp; y &lt;= properties.getField().YMAX);
+    
+}
+function isValidMoveOld(x, y) {
+    var xMaxCanvasDom = (parseInt(Math.floor(jQuery("#mySnakeCanvas").innerWidth())))- properties.getRadius()
+	if (349 &lt; xMaxCanvasDom) {
+		console.log ("Yes it is");
+	}
+	if (350 &lt;= xMaxCanvasDom) {
+	console.log ("it is equeal")}
+	
+	console.log (xMaxCanvasDom);
+	yMaxCanvasDom = Math.floor(jQuery("#mySnakeCanvas").innerHeight());
+	
+/**
+    Aanpassing commentaar
+    if (x >= R &amp;&amp; x &lt;= xMaxCanvasDom &amp;&amp; y >= R &amp;&amp; y &lt;= 350) {
         return true;
     } else {
         return false;
     }
+    */
+    // return (x >= FIELD.XMIN &amp;&amp; x &lt;= FIELD.XMAX &amp;&amp; y >= FIELD.YMIN &amp;&amp; y &lt;= FIELD.YMAX);
+    return (x >= properties.getRadius() &amp;&amp; x &lt;= xMaxCanvasDom &amp;&amp; y >= properties.getRadius() &amp;&amp; y &lt;= 350);
+    
 }
 
  /***************************************************************************
@@ -68,10 +89,10 @@ function isValidMove(x, y) {
 */
 function createStartSnake() {
     // Defineer head
-    var headsegment = createSegment(R + FIELD.WIDTH/2, FIELD.WIDTH/2 - R);
-    headsegment.color = SNAKE.COLORS.HEAD;
+    var headsegment = createSegment(properties.getRadius() + properties.getField().WIDTH/2, properties.getField().WIDTH/2 - properties.getRadius());
+    headsegment.color = properties.getSnake().COLORS.HEAD;
     // Defineer tail
-    var tailsegment = createSegment(R + FIELD.WIDTH/2, R + FIELD.WIDTH/2);
+    var tailsegment = createSegment(properties.getRadius() + properties.getField().WIDTH/2, properties.getRadius() + properties.getField().WIDTH/2);
     var segments = [];
     segments.push(tailsegment);
     segments.push(headsegment);             // Kop van de slang is het laatste element.
@@ -87,9 +108,9 @@ function createStartSnake() {
 function createStartSnake_Alt() {
     // Alternatieve implementatie waarbij de kleur van het segment vooraf wordt bepaald.
     // Defineer kop van de slang
-    var headsegment = createHead(R + FIELD.WIDTH/2, FIELD.WIDTH/2 - R);
+    var headsegment = createHead(properties.getRadius() + properties.getField().WIDTH/2, properties.getField().WIDTH/2 - properties.getRadius());
     // Defineer eerste element van het lichaam van de slang
-    var tailsegment = createSegment(R + FIELD.WIDTH/2, R + FIELD.WIDTH/2);
+    var tailsegment = createSegment(properties.getRadius() + properties.getField().WIDTH/2, properties.getRadius() + properties.getField().WIDTH/2);
     var segments = [];
     segments.push(tailsegment);
     segments.push(headsegment);             // Kop van de slang is het laatste element.
@@ -106,8 +127,9 @@ function createFoods() {
     food,
     i = 0;
     //we gebruiken een while omdat we, om een arraymethode te gebruiken, eerst een nieuw array zouden moeten creëren (met NUMFOODS elementen)
-    while (i &lt; FOOD.NUMBER ) {
-        food = createFood(FIELD.XMIN + getRandomInt(0, FIELD.MAX) * MOVE.STEP, FIELD.YMIN + getRandomInt(0, FIELD.MAX) * MOVE.STEP);
+    while (i &lt; properties.getFood().NUMBER ) {
+        food = createFood(properties.getField().XMIN + getRandomInt(0, properties.getField().MAX) * properties.getMove().STEP, 
+                          properties.getField().YMIN + getRandomInt(0, properties.getField().MAX) * properties.getMove().STEP);
         if (!food.collidesWithOneOf(snake.segments) &amp;&amp; !food.collidesWithOneOf(foods) ) {
             foods.push(food);
             i++;
@@ -125,10 +147,20 @@ function createFoods() {
         worden op random posities op het canvas geplaatst.
 */
 function setupCanvas() {
+    initCanvas();
     createStartSnake();
     // createStartSnake_Alt();
     createFoods();
     draw();
+}
+
+/**
+  @function initCanvas -> void
+  @desc Definieert de veldwaarden die gebruikt worden op het canvas.
+        De basiswaarde wordt uit het mySnakeCanvas object gehaald en afgerond meegegeven.
+*/
+function initCanvas() {
+    properties.setField(Math.round($("#mySnakeCanvas").width()));
 }
 
 /**
@@ -149,13 +181,13 @@ function resetCanvas() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="Snake.html">Snake</a></li></ul><h3>Global</h3><ul><li><a href="global.html#collidesWithOneOf">collidesWithOneOf</a></li><li><a href="global.html#createFoods()-%253Earraymetfood">createFoods() -> array met food</a></li><li><a href="global.html#createStartSnake()-%253ESnake">createStartSnake() -> Snake</a></li><li><a href="global.html#draw()-%253Evoid">draw() -> void</a></li><li><a href="global.html#FIELD">FIELD</a></li><li><a href="global.html#FOOD">FOOD</a></li><li><a href="global.html#getIndexNumber">getIndexNumber</a></li><li><a href="global.html#init()-%253Evoid">init() -> void</a></li><li><a href="global.html#isValidMove-%253EBoolean">isValidMove -> Boolean</a></li><li><a href="global.html#MOVE">MOVE</a></li><li><a href="global.html#move(direction)-%253Evoid">move(direction) -> void</a></li><li><a href="global.html#moveSegment-%253Evoid">moveSegment -> void</a></li><li><a href="global.html#newHead">newHead</a></li><li><a href="global.html#newX">newX</a></li><li><a href="global.html#newY">newY</a></li><li><a href="global.html#R">R</a></li><li><a href="global.html#resetCanvas-%253Evoid">resetCanvas -> void</a></li><li><a href="global.html#setupCanvas-%253Evoid">setupCanvas -> void</a></li><li><a href="global.html#SIDELENGTH">SIDELENGTH</a></li><li><a href="global.html#SNAKE">SNAKE</a></li><li><a href="global.html#stop()-%253Evoid">stop() -> void</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="Snake.html">Snake</a></li></ul><h3>Global</h3><ul><li><a href="global.html#collidesWithOneOf">collidesWithOneOf</a></li><li><a href="global.html#createFoods()-%253Earraymetfood">createFoods() -> array met food</a></li><li><a href="global.html#createStartSnake()-%253ESnake">createStartSnake() -> Snake</a></li><li><a href="global.html#draw()-%253Evoid">draw() -> void</a></li><li><a href="global.html#equalPos">equalPos</a></li><li><a href="global.html#getIndexNumber">getIndexNumber</a></li><li><a href="global.html#init()-%253Evoid">init() -> void</a></li><li><a href="global.html#initCanvas-%253Evoid">initCanvas -> void</a></li><li><a href="global.html#isValidMove-%253EBoolean">isValidMove -> Boolean</a></li><li><a href="global.html#move(direction)-%253Evoid">move(direction) -> void</a></li><li><a href="global.html#moveSegment-%253Evoid">moveSegment -> void</a></li><li><a href="global.html#newHead">newHead</a></li><li><a href="global.html#newX">newX</a></li><li><a href="global.html#newY">newY</a></li><li><a href="global.html#properties">properties</a></li><li><a href="global.html#resetCanvas-%253Evoid">resetCanvas -> void</a></li><li><a href="global.html#setupCanvas-%253Evoid">setupCanvas -> void</a></li><li><a href="global.html#stop()-%253Evoid">stop() -> void</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Mar 30 2019 10:09:59 GMT+0100 (Central European Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Apr 17 2019 20:46:43 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

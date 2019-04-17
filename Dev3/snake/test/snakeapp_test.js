@@ -36,6 +36,7 @@ describe("Tests voor snakeutil.js", function () {
 /****************************************************************************
 **     Element                                                             **
 **         - constructor: Element                                          **
+           - prototype function: equalPos                                                                  
 **         - prototype function: getIndexNumber                            **
 **         - prototpe function: collidesWithOneOf                          **
 ****************************************************************************/
@@ -57,6 +58,20 @@ describe("Tests voor element.js", function () {
           assert.strictEqual(40, elemA.x, "x property not correct");
           assert.strictEqual(50, elemA.y, "y property not correct");
           assert.strictEqual("Blue", elemA.color, "color property not correct");
+        });
+    });
+    
+        describe("Functie equalPos", function() {
+        const elemBase = new Element(10, 100, 80, "Blue");
+        const elemToCheck1 = new Element(10, 100, 80, "Blue");
+        //hier controleren we of de methode true teruggeeft indien de posities gelijk zijn        
+        it("When equal pos return true", function () {
+          assert.isTrue(elemToCheck1.equalPos(elemBase), "A value of true should be returned");
+        });
+        //hier controleren we of de methode true teruggeeft indien de posities niet gelijk zijn 
+        const elemToCheck2 = new Element(10, 30, 50, "Blue");
+        it("When not equal return false", function () {
+          assert.isFalse(elemToCheck2.equalPos(elemBase), "A value of false should be returned");
         });
     });
 
@@ -105,10 +120,10 @@ describe("Tests voor food.js", function () {
         it("When food object created check properties", function () {
             var food = createFood(xPos, yPos);
 
-            assert.strictEqual(food.radius, R, "radius of food not correct");
+            assert.strictEqual(food.radius, properties.getRadius(), "radius of food not correct");
             assert.strictEqual(food.x, xPos, "X pos of food object not correct");
             assert.strictEqual(food.y, yPos, "Y pos of food object not correct");
-            assert.strictEqual(food.color, FOOD.COLOR, "color of food object not correct");
+            assert.strictEqual(food.color, properties.getFood().COLOR, "color of food object not correct");
         });
     });
 });
@@ -128,8 +143,8 @@ describe("Tests voor segment.js", function () {
         //we controleren hier of the functie newX een nieuwe verwachte positie x creert op basis van
         //de MOVE
         it("When new horizontal direction, check if move is as expected", function () {
-            assert.strictEqual(0, newX(20, MOVE.LEFT), "the step left is of incorrect size");
-            assert.strictEqual(40, newX(20, MOVE.RIGHT), "the step right is of incorrect size");
+            assert.strictEqual(0, newX(20, properties.getMove().LEFT), "the step left is of incorrect size");
+            assert.strictEqual(40, newX(20, properties.getMove().RIGHT), "the step right is of incorrect size");
         });
     });
 
@@ -137,8 +152,8 @@ describe("Tests voor segment.js", function () {
         //we controleren hier of the functie newY een nieuwe verwachte positie y creert op basis van
         //de MOVE
         it("When new vertical direction, check if move is as expected", function () {
-            assert.strictEqual(0, newY(20, MOVE.UP), "the step up is of incorrect size");
-            assert.strictEqual(40, newY(20, MOVE.DOWN), "the step down is of incorrect size");
+            assert.strictEqual(0, newY(20, properties.getMove().UP), "the step up is of incorrect size");
+            assert.strictEqual(40, newY(20, properties.getMove().DOWN), "the step down is of incorrect size");
         });
     });
 
@@ -148,10 +163,10 @@ describe("Tests voor segment.js", function () {
         it("When segment object created check properties", function () {
             var segment = createSegment(xPos, yPos);
 
-            assert.strictEqual(segment.radius, R, "radius of segment not correct");
+            assert.strictEqual(segment.radius, properties.getRadius(), "radius of segment not correct");
             assert.strictEqual(segment.x, xPos, "X pos of segment object not correct");
             assert.strictEqual(segment.y, yPos, "Y pos of segment object not correct");
-            assert.strictEqual(segment.color, SNAKE.COLORS.ELEMENT, "color of segment object not correct");
+            assert.strictEqual(segment.color, properties.getSnake().COLORS.ELEMENT, "color of segment object not correct");
         });
     });
 
@@ -161,10 +176,10 @@ describe("Tests voor segment.js", function () {
         it("When head object created check properties", function () {
             var head = createHead(xPos, yPos);
 
-            assert.strictEqual(head.radius, R, "radius of head not correct");
+            assert.strictEqual(head.radius, properties.getRadius(), "radius of head not correct");
             assert.strictEqual(head.x, xPos, "X pos of head object not correct");
             assert.strictEqual(head.y, yPos, "Y pos of head object not correct");
-            assert.strictEqual(head.color, SNAKE.COLORS.HEAD, "color of head object not correct");
+            assert.strictEqual(head.color, properties.getSnake().COLORS.HEAD, "color of head object not correct");
         });
     });
 });
@@ -195,27 +210,30 @@ describe("Tests voor canvasutil.js", function () {
         var segmentDown = createSegment(xPos, yPos);
 
         it("Correct move for LEFT", function () {
-            moveSegment(segmentLeft, MOVE.LEFT);
-            assert.strictEqual(segmentLeft.x, xPos - MOVE.STEP, "Move to left not successful");
+            moveSegment(segmentLeft, properties.getMove().LEFT);
+            assert.strictEqual(segmentLeft.x, xPos - properties.getMove().STEP, "Move to left not successful");
         });
 
         it("Correct move for RIGHT", function () {
-            moveSegment(segmentRight, MOVE.RIGHT);
-            assert.strictEqual(segmentRight.x, xPos + MOVE.STEP, "Move to right not successful");
+            moveSegment(segmentRight, properties.getMove().RIGHT);
+            assert.strictEqual(segmentRight.x, xPos + properties.getMove().STEP, "Move to right not successful");
         });
 
         it("Correct move for UP", function () {
-            moveSegment(segmentUp, MOVE.UP);
-            assert.strictEqual(segmentUp.y, yPos - MOVE.STEP, "Move to up not successful");
+            moveSegment(segmentUp, properties.getMove().UP);
+            assert.strictEqual(segmentUp.y, yPos - properties.getMove().STEP, "Move to up not successful");
         });
 
         it("Correct move for DOWN", function () {
-            moveSegment(segmentDown, MOVE.DOWN);
-            assert.strictEqual(segmentDown.y, yPos + MOVE.STEP, "Move to down not successful");
+            moveSegment(segmentDown, properties.getMove().DOWN);
+            assert.strictEqual(segmentDown.y, yPos + properties.getMove().STEP, "Move to down not successful");
         });
     });
 
     describe("Functie isValidMove", function() {
+        // Voor deze tests initialiseren we het canvas met kant lengte 360
+        properties.setField(360);
+        
         //in deze test controleren we of de functie isValidMove een horizontale beweging dat de snake buiten het canvas
         //plaatst ongeldig is en binnen het canvas geldig.
         it("False when x > 350 of x <10", function () {
@@ -254,7 +272,7 @@ describe("Tests voor canvasutil.js", function () {
             assert.property(snake, 'segments', "no segments found");
             //de snake bestaat uit 2 segmenten
             var headColor = snake.segments[1].color;
-            assert.strictEqual(headColor, SNAKE.COLORS.HEAD, "Snake head has wrong color");
+            assert.strictEqual(headColor, properties.getSnake().COLORS.HEAD, "Snake head has wrong color");
         });
     });
 });
@@ -269,7 +287,7 @@ describe("Tests voor snake.js", function () {
         const nextHead = createHead(60, 80);
 
         it("Check if returned headObject is as expected", function () {
-          assert.deepEqual(newHead(startHead, MOVE.LEFT), nextHead, "New headObject has unexpected values");
+          assert.deepEqual(newHead(startHead, properties.getMove().LEFT), nextHead, "New headObject has unexpected values");
          });
     });
 	
@@ -345,10 +363,10 @@ describe("Tests voor snake.js", function () {
         snake4 = new Snake(segments4);
 
         it("Check if de move is valid", function () {
-        assert.isFalse(snake1.canMove(MOVE.RIGHT), "MOVE.RIGHT at x = 345 is invalid" );
-        assert.isFalse(snake2.canMove(MOVE.LEFT),  "MOVE.LEFT at x 5 is invalid");
-        assert.isFalse(snake3.canMove(MOVE.UP),    "MOVE.UP at y = 5 is invalid" );
-        assert.isFalse(snake4.canMove(MOVE.DOWN),  "MOVE.DOWN at y 355 is invalid");
+        assert.isFalse(snake1.canMove(properties.getMove().RIGHT), "MOVE.RIGHT at x = 345 is invalid" );
+        assert.isFalse(snake2.canMove(properties.getMove().LEFT),  "MOVE.LEFT at x 5 is invalid");
+        assert.isFalse(snake3.canMove(properties.getMove().UP),    "MOVE.UP at y = 5 is invalid" );
+        assert.isFalse(snake4.canMove(properties.getMove().DOWN),  "MOVE.DOWN at y 355 is invalid");
         });
     });
 
@@ -359,15 +377,15 @@ describe("Tests voor snake.js", function () {
 
         //Definieer kop voor de verplaatsing
         var headsegmentStart = createSegment(190,170);
-        headsegmentStart.color = SNAKE.COLORS.HEAD;  // voeg kleur toe om tevens te vergelijken met deepEqual
+        headsegmentStart.color = properties.getMove().COLORS.HEAD;  // voeg kleur toe om tevens te vergelijken met deepEqual
         //Defineer tail voor de verplaatsing
         var tailsegmentStart = createSegment(190,150);
         //Definieer het segment van de kop na de verplaatsing
         var headsegmentFinish = createSegment(210,170);
-        headsegmentFinish.color = SNAKE.COLORS.HEAD; // voeg kleur toe om tevens te vergelijken met deepEqual
+        headsegmentFinish.color = properties.getMove().COLORS.HEAD; // voeg kleur toe om tevens te vergelijken met deepEqual
         //Definieer het segment van de tail na de verplaatsing
         var tailsegmentFinish = createSegment(190,170);
-        tailsegmentFinish.color = SNAKE.COLORS.ELEMENT; // voeg kleur toe om tevens te vergelijken met deepEqual
+        tailsegmentFinish.color = properties.getMove().COLORS.ELEMENT; // voeg kleur toe om tevens te vergelijken met deepEqual
 
         var segments = [];//array van de initiele begin segmenten en posities van de slang
         var segmentsFinish = [];// de array van de verwachte segmenten en daarbijbehorende posities na de beweging
@@ -381,7 +399,7 @@ describe("Tests voor snake.js", function () {
 
         //createFoods();
         //in this test we assume there is no food so there will be no collisions.
-        snake5.doMove(MOVE.RIGHT);
+        snake5.doMove(properties.getMove().RIGHT);
 
         it("Check if the move is as expected and that the segments have moved to the right locations, with the right colors", function () {
         assert.deepEqual(segmentsFinish, snake5.segments, "The segments of the snake have not moved to the expected position or the colors are different" );
@@ -397,18 +415,18 @@ describe("Tests voor snake.js", function () {
 
         //Definieer kop voor de verplaatsing
         var headsegmentStart2 = createSegment(190,170);
-        headsegmentStart2.color = SNAKE.COLORS.HEAD; // voeg kleur toe om tevens te vergelijken met deepEqual
+        headsegmentStart2.color = properties.getMove().COLORS.HEAD; // voeg kleur toe om tevens te vergelijken met deepEqual
         //Defineer tail voor de verplaatsing
         var tailsegmentStart2 = createSegment(190,150);
         //Definieer het segment van de kop na de verplaatsing
         var headsegmentFinish2 = createSegment(210,170);
-        headsegmentFinish2.color = SNAKE.COLORS.HEAD; // voeg kleur toe om tevens te vergelijken met deepEqual
+        headsegmentFinish2.color = properties.getMove().COLORS.HEAD; // voeg kleur toe om tevens te vergelijken met deepEqual
         //Definieer het segment van het middelste segment na de verplaatsing
         var midsegmentFinish2 = createSegment(190,170);
-        midsegmentFinish2.color = SNAKE.COLORS.ELEMENT; // voeg kleur toe om tevens te vergelijken met deepEqual
+        midsegmentFinish2.color = properties.getMove().COLORS.ELEMENT; // voeg kleur toe om tevens te vergelijken met deepEqual
         //Definieer het segment van de tail na de verplaatsing
         var tailsegmentFinish2 = createSegment(190,150);
-        tailsegmentFinish2.color = SNAKE.COLORS.ELEMENT; // voeg kleur toe om tevens te vergelijken met deepEqual
+        tailsegmentFinish2.color = properties.getMove().COLORS.ELEMENT; // voeg kleur toe om tevens te vergelijken met deepEqual
 
         //creeer het voedselsegment waar de slang naartoe beweegt
         var foodsegment = createSegment(210,170);
@@ -435,7 +453,7 @@ describe("Tests voor snake.js", function () {
         } else  {
              this.segments.shift();
         }
-        snake6.getHead().color = SNAKE.COLORS.ELEMENT;
+        snake6.getHead().color = properties.getMove().COLORS.ELEMENT;
         snake6.segments.push(nexthead);
 
         it("Check if the move is as expected and that the segments have moved to the right locations, with the right colors", function () {

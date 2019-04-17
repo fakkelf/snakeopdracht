@@ -25,7 +25,7 @@ function newHead(head, direction) {
 	
     moveSegment(headnew, direction);
 
-    headnew.color = SNAKE.COLORS.HEAD;
+    headnew.color = properties.getSnake().COLORS.HEAD;
   
     return headnew;
 	}
@@ -37,8 +37,7 @@ function newHead(head, direction) {
 /**
 * @function Snake.prototype.gethead
 * @desc vraagt het hoofdsegment op van de slang, de kop.
-* @returns {array} false wanneer de slang over de rand van het canvas zou lopen,
-*                   anders true.
+* @returns {segment}
 * @throws Gooit een fout indien de snake geen elementen bevat.
 */
 Snake.prototype.getHead = function () {
@@ -86,7 +85,7 @@ Snake.prototype.doMove = function (direction) {
         //Totdat later de nieuwe kop segment van de slang wordt toegevoegd
         this.segments.shift();
     }
-    this.getHead().color = SNAKE.COLORS.ELEMENT; // de oude kop verandert van kleur
+    this.getHead().color = properties.getSnake().COLORS.ELEMENT; // de oude kop verandert van kleur
     this.segments.push(nexthead);   // nieuwe kop van slang wordt toegevoegd
 };
 

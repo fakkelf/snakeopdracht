@@ -20,8 +20,13 @@ function moveSegment(segment , direction) {
    @returns {Boolean} false wanneer de Move buiten het canvas valt,
  *                    true wanneer de Move binnen het canvas is.
  */
-function isValidMove(x, y) {
-    var xMaxCanvasDom = (parseInt(Math.floor(jQuery("#mySnakeCanvas").innerWidth())))- R
+ function isValidMove(x, y) {
+  
+    return (x >= properties.getField().XMIN && x <= properties.getField().XMAX && y >= properties.getField().YMIN && y <= properties.getField().YMAX);
+    
+}
+function isValidMoveOld(x, y) {
+    var xMaxCanvasDom = (parseInt(Math.floor(jQuery("#mySnakeCanvas").innerWidth())))- properties.getRadius()
 	if (349 < xMaxCanvasDom) {
 		console.log ("Yes it is");
 	}
@@ -31,11 +36,17 @@ function isValidMove(x, y) {
 	console.log (xMaxCanvasDom);
 	yMaxCanvasDom = Math.floor(jQuery("#mySnakeCanvas").innerHeight());
 	
+/**
+    Aanpassing commentaar
     if (x >= R && x <= xMaxCanvasDom && y >= R && y <= 350) {
         return true;
     } else {
         return false;
     }
+    */
+    // return (x >= FIELD.XMIN && x <= FIELD.XMAX && y >= FIELD.YMIN && y <= FIELD.YMAX);
+    return (x >= properties.getRadius() && x <= xMaxCanvasDom && y >= properties.getRadius() && y <= 350);
+    
 }
 
  /***************************************************************************
@@ -50,10 +61,10 @@ function isValidMove(x, y) {
 */
 function createStartSnake() {
     // Defineer head
-    var headsegment = createSegment(R + FIELD.WIDTH/2, FIELD.WIDTH/2 - R);
-    headsegment.color = SNAKE.COLORS.HEAD;
+    var headsegment = createSegment(properties.getRadius() + properties.getField().WIDTH/2, properties.getField().WIDTH/2 - properties.getRadius());
+    headsegment.color = properties.getSnake().COLORS.HEAD;
     // Defineer tail
-    var tailsegment = createSegment(R + FIELD.WIDTH/2, R + FIELD.WIDTH/2);
+    var tailsegment = createSegment(properties.getRadius() + properties.getField().WIDTH/2, properties.getRadius() + properties.getField().WIDTH/2);
     var segments = [];
     segments.push(tailsegment);
     segments.push(headsegment);             // Kop van de slang is het laatste element.
@@ -69,9 +80,9 @@ function createStartSnake() {
 function createStartSnake_Alt() {
     // Alternatieve implementatie waarbij de kleur van het segment vooraf wordt bepaald.
     // Defineer kop van de slang
-    var headsegment = createHead(R + FIELD.WIDTH/2, FIELD.WIDTH/2 - R);
+    var headsegment = createHead(properties.getRadius() + properties.getField().WIDTH/2, properties.getField().WIDTH/2 - properties.getRadius());
     // Defineer eerste element van het lichaam van de slang
-    var tailsegment = createSegment(R + FIELD.WIDTH/2, R + FIELD.WIDTH/2);
+    var tailsegment = createSegment(properties.getRadius() + properties.getField().WIDTH/2, properties.getRadius() + properties.getField().WIDTH/2);
     var segments = [];
     segments.push(tailsegment);
     segments.push(headsegment);             // Kop van de slang is het laatste element.
@@ -88,8 +99,9 @@ function createFoods() {
     food,
     i = 0;
     //we gebruiken een while omdat we, om een arraymethode te gebruiken, eerst een nieuw array zouden moeten creëren (met NUMFOODS elementen)
-    while (i < FOOD.NUMBER ) {
-        food = createFood(FIELD.XMIN + getRandomInt(0, FIELD.MAX) * MOVE.STEP, FIELD.YMIN + getRandomInt(0, FIELD.MAX) * MOVE.STEP);
+    while (i < properties.getFood().NUMBER ) {
+        food = createFood(properties.getField().XMIN + getRandomInt(0, properties.getField().MAX) * properties.getMove().STEP, 
+                          properties.getField().YMIN + getRandomInt(0, properties.getField().MAX) * properties.getMove().STEP);
         if (!food.collidesWithOneOf(snake.segments) && !food.collidesWithOneOf(foods) ) {
             foods.push(food);
             i++;
@@ -107,10 +119,20 @@ function createFoods() {
         worden op random posities op het canvas geplaatst.
 */
 function setupCanvas() {
+    initCanvas();
     createStartSnake();
     // createStartSnake_Alt();
     createFoods();
     draw();
+}
+
+/**
+  @function initCanvas -> void
+  @desc Definieert de veldwaarden die gebruikt worden op het canvas.
+        De basiswaarde wordt uit het mySnakeCanvas object gehaald en afgerond meegegeven.
+*/
+function initCanvas() {
+    properties.setField(Math.round($("#mySnakeCanvas").width()));
 }
 
 /**
