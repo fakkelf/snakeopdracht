@@ -6,6 +6,51 @@
  /***************************************************************************
  **                 Hulpfuncties                                           **
  ***************************************************************************/
+ /**
+   @function isValidMove -> Boolean
+   @param {Number} x
+   @param {Number} y
+   @returns {Boolean} false wanneer de Move buiten het canvas valt,
+ *                    true wanneer de Move binnen het canvas is.
+ */
+ function isValidMoveX(x, y) {  
+    return (x >= canvas.getField().XMIN && x <= canvas.getField().XMAX && y >= canvas.getField().YMIN && y <= canvas.getField().YMAX);    
+}
+
+/**
+  @function createSegment(x,y) -> Element
+  @desc Slangsegment creeren op een bepaalde plaats
+  @param {number} x - x-coordinaat middelpunt
+  @param {number} y - y-coordinaart middelpunt
+  @return: {Element} met straal R en color SNAKE.COLORS.ELEMENT
+*/
+function createSegment(x, y) {
+    const COLOR = "DarkRed";
+    return new Element(canvas.getElRadius(), x, y, COLOR);
+}
+
+/**
+  @function createHead(x,y) -> Element
+  @desc Slangsegment creeren op een bepaalde plaats
+  @param {number} x - x-coordinaat middelpunt
+  @param {number} y - y-coordinaart middelpunt
+  @return: {Element} met straal R en color SNAKE.COLORS.HEAD
+*/
+function createHead(x, y) {
+    const COLOR = "DarkOrange";
+    return new Element(canvas.getElRadius(), x, y, COLOR);
+}
+
+/**
+   @function moveSegment -> void
+   @desc geeft een nieuwe positie (x,y) aan een segment na een beweging.
+   @param {Element} segment
+   @param {Move} direction
+*/
+function moveSegment(segment , direction) {
+    segment.x = canvascontrol.newXPos(segment.x, direction);
+    segment.y = canvascontrol.newYPos(segment.y, direction);
+}
 
 /**
  * @function newHead
@@ -15,20 +60,10 @@
  * @return {segment}
  */
 function newHead(head, direction) {
-    headnew = createSegment(head.x, head.y);
-	bodysnake = this.snake.segments.slice(0,(this.snake.segments.length -1));  // take the array without the head
-    //als de kop van de slang met de body van de slang botst dan is het spel verloren
-	if (headnew.collidesWithOneOf(bodysnake)) {
-        console.log ("verloren!!!");
-        stop();                       //stop het spel!
-    } else {
-	
+    headnew = createHead(head.x, head.y);	
     moveSegment(headnew, direction);
-
-    headnew.color = properties.getSnake().COLORS.HEAD;
   
     return headnew;
-	}
 }
 
  /***************************************************************************
@@ -58,36 +93,31 @@ Snake.prototype.getHead = function () {
 */
 Snake.prototype.canMove = function (direction) {
     head = this.getHead();
-    return isValidMove(newX(head.x, direction), newY(head.y, direction));
+        return canvas.isValidMove(canvascontrol.newXPos(head.x, direction), canvascontrol.newYPos(head.y, direction));
 };
 
+Snake.prototype.growX = function(nextHead) {
+    this.segments.push(nextHead);
+}
 /**
  @function Snake.prototype.doMove
  @desc Beweegt de slang in de aangegeven richting
  @param {string} direction de richting (een van de constanten MOVE.UP, MOVE.DOWN, MOVE.LEFT of MOVE.RIGHT)
 */
-Snake.prototype.doMove = function (direction) {
 
-    nexthead = newHead(this.getHead(), direction);
-    //Als er een collision is met voedsel dan groeit de slang en wordt het voedsel weggehaald
-    if (typeof nexthead !== 'undefined' && nexthead.collidesWithOneOf(foods)) {
-		//Als er nog voedsel is dan verwijderen we dit voedsel uit de foods array
-		if (foods.length !== 0){
-		    foods.splice(nexthead.getIndexNumber(foods), 1);
-			//Als er geen voedsel meer is heeft de speler gewonnen
-		    if (foods.length === 0){
-            console.log("gewonnen!");
-		    stop()                 //stop het spel
-			};
-        };
-    } else {
-        //Geen collision betekent dat het eerste segment verwijdert wordt hierdoor is de lengte van de slang tijdelijk 1
-        //Totdat later de nieuwe kop segment van de slang wordt toegevoegd
-        this.segments.shift();
-    }
-    this.getHead().color = properties.getSnake().COLORS.ELEMENT; // de oude kop verandert van kleur
+Snake.prototype.doMove = function (direction) {
+    var bodyColor = this.segments[0].color;
+    nexthead = newHead(this.getHead(), direction); 
+
+    // Controleer of de snake niet zichzelf opeet
+    if (nexthead.collidesWithOneOf(this.segments)) {        
+       throw new Error("Slang eet zich zelf op");
+    }    
+    
+    this.getHead().color = bodyColor; // de oude kop verandert van kleur
     this.segments.push(nexthead);   // nieuwe kop van slang wordt toegevoegd
 };
+
 
  /***************************************************************************
  **                 hulpfunctie                                            **
@@ -99,14 +129,6 @@ Snake.prototype.doMove = function (direction) {
         tenzij slang uit canvas zou verdwijnen
   @param   {string} direction de richting (een van de constanten MOVE.UP, MOVE.DOWN, MOVE.LEFT of MOVE.RIGHT)
 */
-function move(direction) {
-    if (snake.canMove(direction)) {
-        snake.doMove(direction);
-        draw();
-    } else {
-        console.log("snake cannot move " + direction);
-    };
-}
 
 
 

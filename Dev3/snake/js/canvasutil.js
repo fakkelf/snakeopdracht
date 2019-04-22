@@ -1,54 +1,140 @@
  /***************************************************************************
- **     functies voor het manipuleren van de elementen van het canvas      **
+ **     Canvas controller                                                   **
  ***************************************************************************/
-
 /**
-   @function moveSegment -> void
-   @desc geeft een nieuwe positie (x,y) aan een segment na een beweging.
-   @param {Element} segment
-   @param {Move} direction
+  @function convascontrol.setupCanvas -> void
+  @desc Maakt een slang en een voedselementen aan, de voedelselementen
+        worden op random posities op het canvas geplaatst.
 */
-function moveSegment(segment , direction) {
-    segment.x = newX(segment.x, direction);
-    segment.y = newY(segment.y, direction);
-}
-
 /**
-   @function isValidMove -> Boolean
-   @param {Number} x
-   @param {Number} y
-   @returns {Boolean} false wanneer de Move buiten het canvas valt,
- *                    true wanneer de Move binnen het canvas is.
- */
- function isValidMove(x, y) {
-  
-    return (x >= properties.getField().XMIN && x <= properties.getField().XMAX && y >= properties.getField().YMIN && y <= properties.getField().YMAX);
-    
-}
-function isValidMoveOld(x, y) {
-    var xMaxCanvasDom = (parseInt(Math.floor(jQuery("#mySnakeCanvas").innerWidth())))- properties.getRadius()
-	if (349 < xMaxCanvasDom) {
-		console.log ("Yes it is");
-	}
-	if (350 <= xMaxCanvasDom) {
-	console.log ("it is equeal")}
-	
-	console.log (xMaxCanvasDom);
-	yMaxCanvasDom = Math.floor(jQuery("#mySnakeCanvas").innerHeight());
-	
-/**
-    Aanpassing commentaar
-    if (x >= R && x <= xMaxCanvasDom && y >= R && y <= 350) {
-        return true;
-    } else {
-        return false;
+  @function canvascontrol.resetCanvas -> void
+  @desc Maakt het canvas schoon.
+*/
+var canvascontrol = (function() {
+    const MOVE = {
+        LEFT: "left",                                   // beweeg naar links
+        RIGHT: "right",                                 // beweeg naar rechts
+        UP: "up",                                       // beweeg naar boven
+        DOWN: "down"                                    // beweeg naar beneden
+    };
+    const NUMFOODS = 5;                             // Aantal voedsel elementen
+    var foods;                                     // voedsel voor de slang
+    var hasFood;                                    // indicator of er nog voedsel is.
+    var snake;
+      
+    var init = function() {
+        foods = []; 
+        snake = {};
+        canvas.init(Math.round($("#mySnakeCanvas").width()));
     }
-    */
-    // return (x >= FIELD.XMIN && x <= FIELD.XMAX && y >= FIELD.YMIN && y <= FIELD.YMAX);
-    return (x >= properties.getRadius() && x <= xMaxCanvasDom && y >= properties.getRadius() && y <= 350);
     
-}
-
+    var createStartSnake = function() {
+        // Defineer head
+        var headsegment = createHead(canvas.getElRadius() + canvas.getField().WIDTH/2, canvas.getField().WIDTH/2 - canvas.getElRadius());
+        // Defineer tail
+        var tailsegment = createSegment(canvas.getElRadius() + canvas.getField().WIDTH/2, canvas.getElRadius() + canvas.getField().WIDTH/2);
+        var segments = [];
+        segments.push(tailsegment);
+        segments.push(headsegment);             // Kop van de slang is het laatste element.
+        snake = new Snake(segments);
+    };
+        
+    var createFoodElements = function() {
+        var  i,
+        foodEl,
+        i = 0;
+        //we gebruiken een while omdat we, om een arraymethode te gebruiken, eerst een nieuw array zouden moeten creëren (met NUMFOODS elementen)
+        while (i < NUMFOODS ) {
+            foodEl = food.createFood(canvas.getField().XMIN + getRandomInt(0, canvas.getField().MAX) * canvas.getStep(), 
+                              canvas.getField().YMIN + getRandomInt(0, canvas.getField().MAX) * canvas.getStep());
+            if (!foodEl.collidesWithOneOf(snake.segments) && !foodEl.collidesWithOneOf(foods) ) {
+                foods.push(foodEl);
+                i++;
+            }
+        }
+        hasFood = true;
+    };
+    
+    var eatFood = function() {
+        // Verwijder het voedsel element
+        foods.splice(snake.getHead().getIndexNumber(foods), 1);
+        // Controleer of er nog voedsel over is
+        if (foods.length === 0) {
+            hasFood = false;
+        }
+    }
+        
+    return {
+        setupCanvas : function() {
+            init();
+            createStartSnake();
+            createFoodElements();
+            // draw();
+            jQuery(document).trigger(new jQuery.Event("drawCanvas"));
+        },
+        hasFood : function() {
+            return hasFood;
+        },
+        getMove : function() {
+            return MOVE;
+        },
+        newXPos : function(x, direction) {
+            if (direction === MOVE.LEFT) {
+                return x - canvas.getStep();
+            }
+            else if (direction === MOVE.RIGHT) {
+                return x + canvas.getStep();
+            }
+            return x;            
+        },
+        newYPos : function(y, direction) {
+            if (direction === MOVE.DOWN) {
+                return y + canvas.getStep();
+            } else if (direction === MOVE.UP) {
+                return y - canvas.getStep();
+            }
+            return y;           
+        },
+        moveSnake : function(direction) {
+            if (snake.canMove(direction)) {
+                try {
+                    snake.doMove(direction);
+                } catch {
+                    console.log("Jammer maar verloren!!, probeer het nog eens.");
+                    return false;                   
+                }                
+                if (snake.getHead().collidesWithOneOf(foods)) {
+                    // Eat food
+                    eatFood();
+                    // Controleer of er nog voedsel is, als al het voedsel op is heeft de speler gewonnen
+                    // redraw het canvas en toon de melding dat de speler gewonnen heeft
+                    if (!hasFood) {
+                        jQuery(document).trigger(new jQuery.Event("drawCanvas"));
+                        console.log("Gewonnen!!");
+                        return false;
+                    }                    
+                } else {
+                    // Shrink snake
+                    snake.segments.shift();
+                }               
+                return true;
+            }
+            console.log("Jammer maar de slang kan niet verder in: " + direction + ",probeer het nog eens.");
+            return false;
+        },
+        getFood : function() {
+            return foods;
+        },
+        getSnake : function() {
+            return snake;
+        },     
+        resetCanvas : function() {
+            $("#mySnakeCanvas").clearCanvas();
+        }
+    };
+}());
+ 
+ 
  /***************************************************************************
  **     functies voor het opbouwen elementen voor het canvas               **
  ***************************************************************************/
@@ -59,87 +145,21 @@ function isValidMoveOld(x, y) {
         in het midden van het veld
   @return: slang volgens specificaties
 */
-function createStartSnake() {
-    // Defineer head
-    var headsegment = createSegment(properties.getRadius() + properties.getField().WIDTH/2, properties.getField().WIDTH/2 - properties.getRadius());
-    headsegment.color = properties.getSnake().COLORS.HEAD;
-    // Defineer tail
-    var tailsegment = createSegment(properties.getRadius() + properties.getField().WIDTH/2, properties.getRadius() + properties.getField().WIDTH/2);
-    var segments = [];
-    segments.push(tailsegment);
-    segments.push(headsegment);             // Kop van de slang is het laatste element.
-    snake = new Snake(segments);
-}
 
-/**
-  @function createStartSnake() -> Snake
-  @desc Slang creëren, bestaande uit  twee segmenten,
-        in het midden van het veld
-  @return: slang volgens specificaties
-*/
-function createStartSnake_Alt() {
-    // Alternatieve implementatie waarbij de kleur van het segment vooraf wordt bepaald.
-    // Defineer kop van de slang
-    var headsegment = createHead(properties.getRadius() + properties.getField().WIDTH/2, properties.getField().WIDTH/2 - properties.getRadius());
-    // Defineer eerste element van het lichaam van de slang
-    var tailsegment = createSegment(properties.getRadius() + properties.getField().WIDTH/2, properties.getRadius() + properties.getField().WIDTH/2);
-    var segments = [];
-    segments.push(tailsegment);
-    segments.push(headsegment);             // Kop van de slang is het laatste element.
-    snake = new Snake(segments);
-}
 
-/**
-  @function createFoods() -> array met food
-  @desc [Element] array van random verdeelde voedselpartikelen
-  @return [Element] array met food
-*/
-function createFoods() {
-    var  i,
-    food,
-    i = 0;
-    //we gebruiken een while omdat we, om een arraymethode te gebruiken, eerst een nieuw array zouden moeten creëren (met NUMFOODS elementen)
-    while (i < properties.getFood().NUMBER ) {
-        food = createFood(properties.getField().XMIN + getRandomInt(0, properties.getField().MAX) * properties.getMove().STEP, 
-                          properties.getField().YMIN + getRandomInt(0, properties.getField().MAX) * properties.getMove().STEP);
-        if (!food.collidesWithOneOf(snake.segments) && !food.collidesWithOneOf(foods) ) {
-            foods.push(food);
-            i++;
-        }
-    }
-}
-
-/***************************************************************************
- **     functies voor het opbouwen het canvas                              **
+ /***************************************************************************
+ **                 Hulpfuncties                                           **
  ***************************************************************************/
  
 /**
-  @function setupCanvas -> void
-  @desc Maakt een slang en een voedselementen aan, de voedelselementen
-        worden op random posities op het canvas geplaatst.
+  @function getRandomInt(min: number, max: number) -> number
+  @desc Creeren van random geheel getal in het interval [min, max] 
+  @param {number} min - een geheel getal als onderste grenswaarde
+  @param {number} max - een geheel getal als bovenste grenswaarde (max > min)
+  @return {number} een random geheel getal x waarvoor geldt: min <= x <= max
 */
-function setupCanvas() {
-    initCanvas();
-    createStartSnake();
-    // createStartSnake_Alt();
-    createFoods();
-    draw();
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-/**
-  @function initCanvas -> void
-  @desc Definieert de veldwaarden die gebruikt worden op het canvas.
-        De basiswaarde wordt uit het mySnakeCanvas object gehaald en afgerond meegegeven.
-*/
-function initCanvas() {
-    properties.setField(Math.round($("#mySnakeCanvas").width()));
-}
-
-/**
-  @function resetCanvas -> void
-  @desc Maakt het canvas schoon.
-*/
-function resetCanvas() {
-    $("#mySnakeCanvas").clearCanvas();
-}
 

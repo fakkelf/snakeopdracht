@@ -9,12 +9,12 @@
    @param {Move} direction - waarde
    @returns {Number} x waarde
 */
-function newX(x, direction) {
-    if (direction === properties.getMove().LEFT) {
-        return x - properties.getMove().STEP;
+function newXZ(x, direction) {
+    if (direction === canvascontrol.getMove().LEFT) {
+        return x - canvas.getStep();
     }
-    else if (direction === properties.getMove().RIGHT) {
-        return x + properties.getMove().STEP;
+    else if (direction === canvascontrol.getMove().RIGHT) {
+        return x + canvas.getStep();
     }
     return x;
 }
@@ -26,11 +26,11 @@ function newX(x, direction) {
   @param {Move} direction - waarde
   @returns {Number} y waarde
 */
-function newY(y, direction) {
-    if (direction === properties.getMove().DOWN) {
-        return y + properties.getMove().STEP;
-    } else if (direction === properties.getMove().UP) {
-        return y - properties.getMove().STEP;
+function newYZ(y, direction) {
+    if (direction === canvascontrol.getMove().DOWN) {
+        return y + canvas.getStep();
+    } else if (direction === canvascontrol.getMove().UP) {
+        return y - canvas.getStep();
     }
     return y;
 }
@@ -46,8 +46,9 @@ function newY(y, direction) {
   @param {number} y - y-coordinaart middelpunt
   @return: {Element} met straal R en color SNAKE.COLORS.ELEMENT
 */
-function createSegment(x, y) {
-    return new Element(properties.getRadius(), x, y, properties.getSnake().COLORS.ELEMENT);
+function createSegmentX(x, y) {
+    const COLOR = "DarkRed";
+    return new Element(canvas.getElRadius(), x, y, COLOR);
 }
 
 /**
@@ -57,6 +58,7 @@ function createSegment(x, y) {
   @param {number} y - y-coordinaart middelpunt
   @return: {Element} met straal R en color SNAKE.COLORS.HEAD
 */
-function createHead(x, y) {
-    return new Element(properties.getRadius(), x, y, properties.getSnake().COLORS.HEAD);
+function createHeadX(x, y) {
+    const COLOR = "DarkOrange";
+    return new Element(canvas.getElRadius(), x, y, COLOR);
 }

@@ -1,17 +1,23 @@
-jQuery(document).keydown(function (e) {
+
+$(document).ready(function () {
+    $("#startSnake").click(snakeapp.init);
+    $("#stopSnake").click(snakeapp.stop);
+});
+
+jQuery(document).keydown(function (e) {    
     switch (e.which) {
-       case 37: // left
-		 direction = MOVE.LEFT;
-		 break;
+    case 37: // left
+        snakeapp.setDirection(canvascontrol.getMove().LEFT);
+		break;
 	   case 38: // up
-		  direction = MOVE.UP;
-		  break;
+        snakeapp.setDirection(canvascontrol.getMove().UP);
+		break;
 	   case 39: // right
-		  direction = MOVE.RIGHT;
-		  break;
+        snakeapp.setDirection(canvascontrol.getMove().RIGHT);
+		break;
 	   case 40: // down
-		  direction = MOVE.DOWN;
-		  break;
+        snakeapp.setDirection(canvascontrol.getMove().DOWN);
+		break;
     };
 });
 
