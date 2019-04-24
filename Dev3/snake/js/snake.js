@@ -13,9 +13,6 @@
    @returns {Boolean} false wanneer de Move buiten het canvas valt,
  *                    true wanneer de Move binnen het canvas is.
  */
- function isValidMoveX(x, y) {  
-    return (x >= canvas.getField().XMIN && x <= canvas.getField().XMAX && y >= canvas.getField().YMIN && y <= canvas.getField().YMAX);    
-}
 
 /**
   @function createSegment(x,y) -> Element
@@ -96,9 +93,6 @@ Snake.prototype.canMove = function (direction) {
         return canvas.isValidMove(canvascontrol.newXPos(head.x, direction), canvascontrol.newYPos(head.y, direction));
 };
 
-Snake.prototype.growX = function(nextHead) {
-    this.segments.push(nextHead);
-}
 /**
  @function Snake.prototype.doMove
  @desc Beweegt de slang in de aangegeven richting

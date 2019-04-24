@@ -72,6 +72,11 @@ var canvascontrol = (function() {
             // draw();
             jQuery(document).trigger(new jQuery.Event("drawCanvas"));
         },
+        loadGame : function(segments, foodelements) {
+            snake.segments = segments;
+            foods = foodelements;
+            jQuery(document).trigger(new jQuery.Event("drawCanvas"));
+        },
         hasFood : function() {
             return hasFood;
         },
@@ -100,8 +105,7 @@ var canvascontrol = (function() {
                 try {
                     snake.doMove(direction);
                 } catch {
-                    console.log("Jammer maar verloren!!, probeer het nog eens.");
-                    return false;                   
+                    return {result: false, code: 10};                 
                 }                
                 if (snake.getHead().collidesWithOneOf(foods)) {
                     // Eat food
@@ -110,17 +114,16 @@ var canvascontrol = (function() {
                     // redraw het canvas en toon de melding dat de speler gewonnen heeft
                     if (!hasFood) {
                         jQuery(document).trigger(new jQuery.Event("drawCanvas"));
-                        console.log("Gewonnen!!");
-                        return false;
+                        return {result: false, code: 0}; 
                     }                    
                 } else {
                     // Shrink snake
                     snake.segments.shift();
-                }               
-                return true;
+                }      
+                return {result: true, code: -1};
             }
-            console.log("Jammer maar de slang kan niet verder in: " + direction + ",probeer het nog eens.");
-            return false;
+          
+            return {result: false, code: 20}; 
         },
         getFood : function() {
             return foods;
@@ -133,7 +136,6 @@ var canvascontrol = (function() {
         }
     };
 }());
- 
  
  /***************************************************************************
  **     functies voor het opbouwen elementen voor het canvas               **

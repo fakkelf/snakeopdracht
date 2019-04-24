@@ -15,56 +15,72 @@ var snakeapp = (function() {
     const UP = "up";                                        // beweeg naar boven
     const DOWN = "down";                                    // beweeg naar beneden
     const SLEEPTIME    = 500
-    var direction;
+    var direction;                                          // bevat de richting waarin de slang beweegt.
     var snakeTimer;
-    
-    var setScore = function() {               
-        if (canvascontrol.hasFood) {
-            score.verloren();
-        } else {
-            score.gewonnen();
-        }
-        console.log(score.getStand())
-    }
-    
-    var move = function() {
-        if (canvascontrol.moveSnake(direction)) {
-            jQuery(document).trigger(new jQuery.Event("drawCanvas"));
-        } else {
-            stopTimer();
-            // Bepaal nu of de speler deze ronde gewonnen of verloren heeft
-            setScore();
-        }
-    };
-    
+    var moveresult;                                         // Resultaat van een beweging. {result: boolean, code: number}
+   
+        
     var stopTimer = function() {
         clearInterval(snakeTimer);   // stopt de interval en daarmee de beweging van de slang
         snakeTimer = null;
+    }
+    
+    var startTimer = function() {
+        if (!snakeTimer) {                              // Voorkom meerdere malen starten van timer functionaliteit.
+            snakeTimer = setInterval (function() {            //start het interval en daarmee de beweging van de slang
+                moveresult = canvascontrol.moveSnake(direction);
+                if (moveresult.result) {
+                    jQuery(document).trigger(new jQuery.Event("drawCanvas"));
+                } else {
+                    stopTimer();
+                    // Bepaal nu of de speler deze ronde gewonnen of verloren heeft
+                    score.updateScore(moveresult.code);
+                    score.printResult(moveresult.code);
+                }
+            }, SLEEPTIME);
+        }
     }
     
     return {
         init : function() {
             canvascontrol.setupCanvas();
             direction = UP;                             // richting van de slang begint omhoog
-                        
-            if (!snakeTimer) {                              // Voorkom meerdere malen starten van timer functionaliteit.
-                snakeTimer = setInterval (function() {            //start het interval en daarmee de beweging van de slang
-                    if (canvascontrol.hasFood()) {
-                        move();
-                    }
-                }, SLEEPTIME);
-            }
+            startTimer();                               // start beweging van slang 
         },
-        setDirection(directionNew) {
-            direction = directionNew;
+        laad : function() {
+            spelstand.laadStand();
+        },
+        laadspelstand : function() {
+            var spel = spelstand.getSpelStand();
+            console.log(spel);
+            direction = spel.direction;
+            canvascontrol.loadGame(spel.segments, spel.foods);            
+            startTimer();                               // herstart beweging van slang in de juiste richting
+        },
+        bewaar : function() {
+            spelstand.bewaarStand(canvascontrol.getSnake().segments, canvascontrol.getFood(), direction);
+            stopTimer();
+            moveresult.result = false;
         },
         stop : function() {
             stopTimer();
-
+            
+            // Verhoog het aantal verloren spellen indien er tijdens de uitvoer van het spel op stop wordt gedrukt
+            if (moveresult.result) {
+                score.updateScore(moveresult.code);
+                score.printResult(moveresult.code);
+                moveresult.result = false;
+            }
             canvascontrol.resetCanvas();
-        }
+        },
+        setDirection : function(directionNew) {
+            direction = directionNew;
+        }, 
     };
 }());
+
+
+jQuery(document).on("loadGame", snakeapp.laadspelstand);
 
 /***************************************************************************
  **                 Commando's voor de gebruiker                          **
@@ -73,31 +89,11 @@ var snakeapp = (function() {
   @function init() -> void
   @desc Haal eventueel bestaand voedsel en een bestaande slang weg, cre\"eer een slang, genereer voedsel, en teken alles
 */
-function initX() {
-    // snake = [];
-
-    canvascontrol.setupCanvas();
-	
-    snakeTimer = setInterval (function() {            //start het interval en daarmee de beweging van de slang
-//        if (foods.length !==0) {
-//            move (direction);
-//        }
-        if (canvascontrol.hasFood()) {
-            move (direction);
-        }
-    }, properties.getSleepTime());
-}
 
 /**
   @function stop() -> void
   @desc Laat slang en voedsel verdwijnen, en teken leeg veld
 */
-function stopX() {
-    clearInterval(snakeTimer);   // stopt de interval en daarmee de beweging van de slang
-    // snake = [];
-
-    canvascontrol.resetCanvas();
-}
 
 
 /**
@@ -106,41 +102,5 @@ function stopX() {
         tenzij slang uit canvas zou verdwijnen
   @param   {string} direction - de richting (een van de constanten MOVE.UP, MOVE.DOWN, MOVE.LEFT of MOVE.RIGHT)
 */
-function moveX(direction) {
-    if (canvascontrol.getSnake().canMove(direction)) {
-        // var nextHead = newHead(canvascontrol.getSnake().getHead(), direction);
-        //if canvascontrol.collidesWithFood(nextHead)) {
-            // 
-        //    canvascontrol.getSnake().grow(nextHead));
-        //}
-        //var grow = nextHead.collidesWithOneOf(canvascontrol.getFood());
-        // Verplaats de snake
-        // canvascontrol.getSnake().doMove(direction);
-        
-        
-        //canvascontrol.getSnake().doMove(direction, grow);
-//        if (foods.length !== 0) {
-//        draw();
-//		}
-        draw();
-    } else {
-        console.log("snake cannot move " + direction);
-		stopTimer()
-    }
-}
-
-function moveX(direction) {
-    if (canvascontrol.moveSnake(direction)) {
-        draw();
-    } else {
-        console.log("snake cannot move " + direction);
-		stopTimer()
-    }
-}
-
-function stopTimerX() {
-    clearInterval(snakeTimer);   // stopt de interval en daarmee de beweging van de slang
-}
-
 
 

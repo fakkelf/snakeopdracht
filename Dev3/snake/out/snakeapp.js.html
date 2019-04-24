@@ -29,15 +29,86 @@
             <pre class="prettyprint source linenums"><code> /***************************************************************************
  **                 Variabelen                                             **
  ***************************************************************************/
-var snake,
-    foods = [];                                // voedsel voor de slang\\
 
-var direction = properties.getMove().UP;                       // richting van de slang begint omhoog
 
-$(document).ready(function () {
-    $("#startSnake").click(init);
-    $("#stopSnake").click(stop);
+$("#logout").click(function(e) { 
+    clearInterval(interval); 
+    interval = null;
 });
+
+
+var snakeapp = (function() {
+    const LEFT =  "left";                                   // beweeg naar links
+    const RIGHT = "right";                                  // beweeg naar rechts
+    const UP = "up";                                        // beweeg naar boven
+    const DOWN = "down";                                    // beweeg naar beneden
+    const SLEEPTIME    = 500
+    var direction;                                          // bevat de richting waarin de slang beweegt.
+    var snakeTimer;
+    var moveresult;                                         // Resultaat van een beweging. {result: boolean, code: number}
+   
+        
+    var stopTimer = function() {
+        clearInterval(snakeTimer);   // stopt de interval en daarmee de beweging van de slang
+        snakeTimer = null;
+    }
+    
+    var startTimer = function() {
+        if (!snakeTimer) {                              // Voorkom meerdere malen starten van timer functionaliteit.
+            snakeTimer = setInterval (function() {            //start het interval en daarmee de beweging van de slang
+                moveresult = canvascontrol.moveSnake(direction);
+                if (moveresult.result) {
+                    jQuery(document).trigger(new jQuery.Event("drawCanvas"));
+                } else {
+                    stopTimer();
+                    // Bepaal nu of de speler deze ronde gewonnen of verloren heeft
+                    score.updateScore(moveresult.code);
+                    score.printResult(moveresult.code);
+                }
+            }, SLEEPTIME);
+        }
+    }
+    
+    return {
+        init : function() {
+            canvascontrol.setupCanvas();
+            direction = UP;                             // richting van de slang begint omhoog
+            startTimer();                               // start beweging van slang 
+        },
+        laad : function() {
+            spelstand.laadStand();
+        },
+        laadspelstand : function() {
+            var spel = spelstand.getSpelStand();
+            console.log(spel);
+            direction = spel.direction;
+            canvascontrol.loadGame(spel.segments, spel.foods);            
+            startTimer();                               // herstart beweging van slang in de juiste richting
+        },
+        bewaar : function() {
+            spelstand.bewaarStand(canvascontrol.getSnake().segments, canvascontrol.getFood(), direction);
+            stopTimer();
+            moveresult.result = false;
+        },
+        stop : function() {
+            stopTimer();
+            
+            // Verhoog het aantal verloren spellen indien er tijdens de uitvoer van het spel op stop wordt gedrukt
+            if (moveresult.result) {
+                score.updateScore(moveresult.code);
+                score.printResult(moveresult.code);
+                moveresult.result = false;
+            }
+            canvascontrol.resetCanvas();
+        },
+        setDirection : function(directionNew) {
+            direction = directionNew;
+        }, 
+    };
+}());
+
+
+jQuery(document).on("loadGame", snakeapp.laadspelstand);
 
 /***************************************************************************
  **                 Commando's voor de gebruiker                          **
@@ -46,30 +117,11 @@ $(document).ready(function () {
   @function init() -> void
   @desc Haal eventueel bestaand voedsel en een bestaande slang weg, cre\"eer een slang, genereer voedsel, en teken alles
 */
-function init() {
-    snake = [];
-    foods = [];
-
-    setupCanvas();
-	
-    snakeTimer = setInterval (function() {            //start het interval en daarmee de beweging van de slang
-        if (foods.length !==0) {
-            move (direction);
-        }
-    }, properties.getSleepTime());
-}
 
 /**
   @function stop() -> void
   @desc Laat slang en voedsel verdwijnen, en teken leeg veld
 */
-function stop() {
-    clearInterval(snakeTimer);   // stopt de interval en daarmee de beweging van de slang
-    snake = [];
-    foods = [];
-
-    resetCanvas();
-}
 
 
 /**
@@ -78,17 +130,6 @@ function stop() {
         tenzij slang uit canvas zou verdwijnen
   @param   {string} direction - de richting (een van de constanten MOVE.UP, MOVE.DOWN, MOVE.LEFT of MOVE.RIGHT)
 */
-function move(direction) {
-    if (snake.canMove(direction)) {
-        snake.doMove(direction);
-        if (foods.length !== 0) {
-        draw();
-		}
-    } else {
-        console.log("snake cannot move " + direction);
-		stop()
-    }
-}
 
 
 </code></pre>
@@ -101,13 +142,13 @@ function move(direction) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="Snake.html">Snake</a></li></ul><h3>Global</h3><ul><li><a href="global.html#collidesWithOneOf">collidesWithOneOf</a></li><li><a href="global.html#createFoods()-%253Earraymetfood">createFoods() -> array met food</a></li><li><a href="global.html#createStartSnake()-%253ESnake">createStartSnake() -> Snake</a></li><li><a href="global.html#draw()-%253Evoid">draw() -> void</a></li><li><a href="global.html#equalPos">equalPos</a></li><li><a href="global.html#getIndexNumber">getIndexNumber</a></li><li><a href="global.html#init()-%253Evoid">init() -> void</a></li><li><a href="global.html#initCanvas-%253Evoid">initCanvas -> void</a></li><li><a href="global.html#isValidMove-%253EBoolean">isValidMove -> Boolean</a></li><li><a href="global.html#move(direction)-%253Evoid">move(direction) -> void</a></li><li><a href="global.html#moveSegment-%253Evoid">moveSegment -> void</a></li><li><a href="global.html#newHead">newHead</a></li><li><a href="global.html#newX">newX</a></li><li><a href="global.html#newY">newY</a></li><li><a href="global.html#properties">properties</a></li><li><a href="global.html#resetCanvas-%253Evoid">resetCanvas -> void</a></li><li><a href="global.html#setupCanvas-%253Evoid">setupCanvas -> void</a></li><li><a href="global.html#stop()-%253Evoid">stop() -> void</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Element.html">Element</a></li><li><a href="Snake.html">Snake</a></li></ul><h3>Global</h3><ul><li><a href="global.html#collidesWithOneOf">collidesWithOneOf</a></li><li><a href="global.html#createStartSnake()-%253ESnake">createStartSnake() -> Snake</a></li><li><a href="global.html#draw()-%253Evoid">draw() -> void</a></li><li><a href="global.html#equalPos">equalPos</a></li><li><a href="global.html#getIndexNumber">getIndexNumber</a></li><li><a href="global.html#init()-%253Evoid">init() -> void</a></li><li><a href="global.html#isValidMove-%253EBoolean">isValidMove -> Boolean</a></li><li><a href="global.html#move(direction)-%253Evoid">move(direction) -> void</a></li><li><a href="global.html#moveSegment-%253Evoid">moveSegment -> void</a></li><li><a href="global.html#newHead">newHead</a></li><li><a href="global.html#stop()-%253Evoid">stop() -> void</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Apr 17 2019 20:46:43 GMT+0200 (Central European Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Apr 24 2019 22:37:38 GMT+0200 (Central European Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>
